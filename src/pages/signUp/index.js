@@ -17,7 +17,9 @@ const signUp = () => {
       'password',
       'Введите пароль',
     ),
-    submit: button('Зарегистрироваться', 'primary'),
+    submit: button('Зарегистрироваться', 'primary', {
+      onClick: '(() => { window.location.href = "/signin" })()',
+    }),
     link: button('Войти', 'link', { href: '/signin' }),
   });
 };

@@ -3,48 +3,12 @@ import './style.scss';
 import profileField from '../../components/profileField';
 import profileButton from '../../components/profileButton';
 import profileAvatarEdit from '../../components/profileAvatarEdit';
-
-const fields = [
-  {
-    name: 'email',
-    label: 'Почта',
-    placeholder: 'Введите почту',
-    value: 'pochta@yandex.ru',
-  },
-  {
-    name: 'login',
-    label: 'Логин',
-    placeholder: 'Введите логин',
-    value: 'ivanivanov',
-  },
-  {
-    name: 'first_name',
-    label: 'Имя',
-    placeholder: 'Введите имя',
-    value: 'ivanivanov',
-  },
-  {
-    name: 'second_name',
-    label: 'Фамилия',
-    placeholder: 'Введите фамилию',
-    value: 'ivanivanov',
-  },
-  {
-    name: 'display_name',
-    label: 'Имя в чате',
-    placeholder: 'Введите имя в чате',
-    value: 'ivanivanov',
-  },
-  {
-    name: 'phone',
-    label: 'Телефон',
-    placeholder: 'Введите телефон',
-    value: 'ivanivanov',
-  },
-];
+import { profileFields } from '../../utils/constants';
 
 const profilePage = (isAvatarEdit) => {
-  const fieldsHtml = fields.map((f) => profileField(f.label, f.placeholder, f.value, 'text', true));
+  const fieldsHtml = profileFields.map((f) =>
+    profileField(f.name, f.label, f.placeholder, f.value, 'text', true),
+  );
   return tpl({
     fields: fieldsHtml,
     buttonEdit: profileButton('Изменить данные', 'link', 'default', { href: '/profile/edit' }),

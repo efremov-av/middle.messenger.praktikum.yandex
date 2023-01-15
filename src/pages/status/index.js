@@ -4,7 +4,7 @@ import './style.scss';
 
 const statusPage = (status, title, description) => {
   return tpl({
-    goBackButton: button('Назад к чатам', 'link', { href: '/' }),
+    goBackButton: button('Назад к чатам', 'link', { href: '/main' }),
     status,
     title,
     description,

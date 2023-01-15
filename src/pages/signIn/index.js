@@ -7,7 +7,7 @@ const signIn = () => {
   return tpl({
     textboxLogin: textbox('Логин', 'login', 'text', 'Введите логин'),
     textboxPassword: textbox('Пароль', 'password', 'password', 'Введите пароль'),
-    submit: button('Войти', 'primary', { onClick: '(() => { window.location.href = "/" })()' }),
+    submit: button('Войти', 'primary', { onClick: '(() => { window.location.href = "/main" })()' }),
     link: button('Зарегистрироваться', 'link', { href: '/signup' }),
   });
 };

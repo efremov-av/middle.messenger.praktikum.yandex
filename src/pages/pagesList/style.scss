@@ -1,0 +1,40 @@
+@import "./../../variables.scss";
+
+.pages-list {
+  &__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__container {
+    height: 100vh;
+    background-image: url("/static/img/pattern-bg.jpg");
+    background-size: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__content {
+    width: 360px;
+    background: #fff;
+    box-shadow: 0px 2px 15px rgba(3, 22, 71, 0.25);
+    border-radius: 12px;
+    padding: 30px;
+
+    ul {
+      list-style: none;
+
+      li {
+        margin-top: 10px;
+        color: $primary-color;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
