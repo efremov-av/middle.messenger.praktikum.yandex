@@ -6,6 +6,8 @@
 
 Учебный проект созданный в рамках прохождения курса "Middle-frontend разработчик" на Яндекс Практикуме.
 
+[Pull request](https://github.com/efremov-av/middle.messenger.praktikum.yandex/pull/2)
+
 [Netlify](https://efremov-av-practicum-chat.netlify.app/)
 
 [Макет figma](https://www.figma.com/file/hUPga5FWUKyTxK3WV7pWNc/Practicum-chat?node-id=0%3A1&t=Lj3WCpTLGFLbooYM-1)
