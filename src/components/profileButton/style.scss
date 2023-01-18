@@ -1,0 +1,37 @@
+@import "./../../variables.scss";
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  border-bottom: 1px solid #eaeaea;
+
+  a,
+  button {
+    text-decoration: none;
+    font-size: 13px;
+    color: $primary-color;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &_danger {
+    a,
+    button {
+      color: #ff0000;
+    }
+  }
+
+  &:last-child {
+    border: none;
+  }
+}

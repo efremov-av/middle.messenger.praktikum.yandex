@@ -1,0 +1,14 @@
+<div class="pages-list">
+  <div class="pages-list__container">
+    <nav class="pages-list__content">
+      <h2>Список страниц</h2>
+      <ul>
+        {{#each pages}}
+          <li>
+            <a href={{this.url}}>{{this.name}}</a>
+          </li>
+        {{/each}}
+      </ul>
+    </nav>
+  </div>
+</div>
