@@ -6,10 +6,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #0000007b;
+  background-color: $bg-color-transparent;
 
   &__modal {
-    background-color: #fff;
+    background-color: $color-white;
     border-radius: 12px;
     padding: 30px;
     text-align: center;
@@ -35,7 +35,7 @@
     label {
       cursor: pointer;
       font-size: 12px;
-      color: $primary-color;
+      color: $color-primary;
       text-decoration: underline;
 
       input {

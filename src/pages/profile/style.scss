@@ -47,8 +47,8 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      background-color: #00000081;
-      color: #fff;
+      background-color: $bg-color-transparent;
+      color: $color-white;
       font-size: 13px;
       padding: 20px;
       text-decoration: none;
@@ -80,10 +80,10 @@
     justify-content: center;
     align-items: center;
     background-color: #fbfbfb;
-    border-right: 1px solid #eaeaea;
+    border-right: 1px solid $border-color;
 
     &__button {
-      background-color: $primary-color;
+      background-color: $color-primary;
       width: 32px;
       height: 32px;
       display: flex;
@@ -101,7 +101,7 @@
   transform: scale(var(--ggs, 1));
   width: 22px;
   height: 22px;
-  color: #fff;
+  color: $color-white;
 }
 .gg-arrow-left::after,
 .gg-arrow-left::before {

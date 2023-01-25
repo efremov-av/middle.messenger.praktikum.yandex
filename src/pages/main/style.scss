@@ -21,12 +21,12 @@
 
   &-chats-list {
     background-color: #fbfbfb;
-    border-right: 1px solid #eaeaea;
+    border-right: 1px solid $border-color;
     padding: 10px;
 
     &__header {
       padding: 14px 0;
-      border-bottom: 1px solid #eaeaea;
+      border-bottom: 1px solid $border-color;
     }
 
     &__profile {

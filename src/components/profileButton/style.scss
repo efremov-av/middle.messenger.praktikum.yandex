@@ -4,13 +4,13 @@
   display: flex;
   align-items: center;
   height: 32px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid $border-color;
 
   a,
   button {
     text-decoration: none;
     font-size: 13px;
-    color: $primary-color;
+    color: $color-primary;
     display: block;
     width: 100%;
     text-align: left;
@@ -27,7 +27,7 @@
   &_danger {
     a,
     button {
-      color: #ff0000;
+      color: $color-red;
     }
   }
 
