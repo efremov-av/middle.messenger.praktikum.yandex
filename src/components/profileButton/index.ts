@@ -2,7 +2,17 @@ import tplBtn from './tplBtn.hbs';
 import tplLink from './tplLink.hbs';
 import './style.scss';
 
-const profileButton = (text, type = 'default', style = 'default', params) => {
+type ParamsType = {
+  href?: string;
+  onClick?: any;
+};
+
+const profileButton = (
+  text: string,
+  type: string = 'default',
+  style: string = 'default',
+  params: ParamsType,
+) => {
   if (type === 'link') {
     return tplLink({ text, style, href: params.href });
   }

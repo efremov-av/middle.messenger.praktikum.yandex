@@ -7,7 +7,7 @@ import { passwordFields } from '../../utils/constants';
 
 const profilePassword = () => {
   const fieldsHtml = passwordFields.map((f) =>
-    profileField(f.name, f.label, f.placeholder, f.value, 'password'),
+    profileField(f.name, f.label, f.placeholder, f.value, 'password', false),
   );
   return tpl({
     fields: fieldsHtml,

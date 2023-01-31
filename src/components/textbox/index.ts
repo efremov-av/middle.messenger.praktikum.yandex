@@ -1,7 +1,7 @@
 import tpl from './tpl.hbs';
 import './style.scss';
 
-const textbox = (label, name, inputType, placeholder) => {
+const textbox = (label: string, name: string, inputType: string, placeholder: string) => {
   return tpl({ label, name, inputType, placeholder });
 };
 

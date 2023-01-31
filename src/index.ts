@@ -9,7 +9,7 @@ import profileEditPage from './pages/profileEdit';
 import pagesList from './pages/pagesList';
 import { pages } from './utils/constants';
 
-let page;
+let page: any;
 const path = window.location.pathname;
 
 switch (path) {
@@ -45,4 +45,4 @@ switch (path) {
     break;
 }
 
-document.getElementById('root').innerHTML = page;
+document.getElementById('root')!.innerHTML = page;

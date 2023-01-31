@@ -5,8 +5,15 @@ import profileButton from '../../components/profileButton';
 import profileAvatarEdit from '../../components/profileAvatarEdit';
 import { profileFields } from '../../utils/constants';
 
-const profilePage = (isAvatarEdit) => {
-  const fieldsHtml = profileFields.map((f) =>
+type ProfileFieldType = {
+  name: string;
+  label: string;
+  placeholder: string;
+  value: string | undefined;
+};
+
+const profilePage = (isAvatarEdit: boolean) => {
+  const fieldsHtml = profileFields.map((f: ProfileFieldType) =>
     profileField(f.name, f.label, f.placeholder, f.value, 'text', true),
   );
   return tpl({

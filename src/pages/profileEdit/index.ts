@@ -7,7 +7,7 @@ import { profileFields } from '../../utils/constants';
 
 const profileEditPage = () => {
   const fieldsHtml = profileFields.map((f) =>
-    profileField(f.name, f.label, f.placeholder, f.value, 'text'),
+    profileField(f.name, f.label, f.placeholder, f.value, 'text', false),
   );
   return tpl({
     fields: fieldsHtml,
