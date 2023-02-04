@@ -10,6 +10,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "targets": {
+    "default": {
+      "engines": {
+        "browsers": ">= 50%"
+      },
+      "sourceMap": false
+    }
+  },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
     "@parcel/transformer-sass": "2.8.2",
