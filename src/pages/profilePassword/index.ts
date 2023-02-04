@@ -4,7 +4,7 @@ import './style.scss';
 import { passwordFields } from '../../utils/constants';
 import Block from '../../components/common/Block';
 import Button from '../../components/button';
-import { ProfileField } from '../../components/ProfileField';
+import { ProfileField } from '../../components/profileField';
 import { getData } from '../../utils/utils';
 
 type PropsType = {

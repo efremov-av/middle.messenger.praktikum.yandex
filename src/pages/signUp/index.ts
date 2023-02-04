@@ -2,7 +2,7 @@ import Button from '../../components/button';
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
-import { Textbox } from '../../components/Textbox';
+import { Textbox } from '../../components/textbox';
 import { getData } from '../../utils/utils';
 import { ValidationError } from '../../components/ValidationError';
 import { validation } from '../../utils/validation';

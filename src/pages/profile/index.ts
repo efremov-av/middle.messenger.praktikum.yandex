@@ -1,10 +1,10 @@
 import tpl from './tpl.hbs';
 import './style.scss';
-import { ProfileField } from '../../components/ProfileField';
-import { ProfileButton } from '../../components/ProfileButton';
+import { ProfileField } from '../../components/profileField';
+import { ProfileButton } from '../../components/profileButton';
 import { profileFields } from '../../utils/constants';
 import Block from '../../components/common/Block';
-import { ProfileAvatarEdit } from '../../components/ProfileAvatarEdit';
+import { ProfileAvatarEdit } from '../../components/profileAvatarEdit';
 
 type PropsType = {
   isAvatarEdit: boolean;
