@@ -1,20 +1,37 @@
 import tpl from './tpl.hbs';
 import './../profile/style.scss';
 import './style.scss';
-import profileField from '../../components/profileField';
-import button from '../../components/button';
 import { profileFields } from '../../utils/constants';
+import Block from '../../components/common/Block';
+import { Button } from '../../components/button';
+import { ProfileField } from '../../components/profileField';
+export class ProfileEditPage extends Block {
+  constructor() {
+    super({});
+  }
 
-const profileEditPage = () => {
-  const fieldsHtml = profileFields.map((f) =>
-    profileField(f.name, f.label, f.placeholder, f.value, 'text', false),
-  );
-  return tpl({
-    fields: fieldsHtml,
-    buttonSave: button('Сохранить', 'primary', {
-      onClick: '(() => { window.location.href = "/profile" })()',
-    }),
-  });
-};
+  init() {
+    this.children.buttonSave = new Button({
+      text: 'Сохранить',
+      type: 'primary',
+      params: {
+        onClick: '(() => { window.location.href = "/profile" })()',
+      },
+    });
+    this.children.fieldsHtml = profileFields.map(
+      (f) =>
+        new ProfileField({
+          name: f.name,
+          label: f.label,
+          placeholder: f.placeholder,
+          value: f.value,
+          type: 'text',
+          isDisabled: false,
+        })
+    );
+  }
 
-export default profileEditPage;
+  render() {
+    return this.compile(tpl, { ...this.props });
+  }
+}

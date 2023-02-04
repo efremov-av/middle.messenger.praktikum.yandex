@@ -1,15 +1,43 @@
-import button from '../../components/button';
-import textbox from '../../components/textbox';
+import { Button } from '../../components/button';
 import tpl from './tpl.hbs';
 import './style.scss';
+import Block from '../../components/common/Block';
+import { Textbox } from '../../components/textbox';
 
-const signIn = () => {
-  return tpl({
-    textboxLogin: textbox('Логин', 'login', 'text', 'Введите логин'),
-    textboxPassword: textbox('Пароль', 'password', 'password', 'Введите пароль'),
-    submit: button('Войти', 'primary', { onClick: '(() => { window.location.href = "/main" })()' }),
-    link: button('Зарегистрироваться', 'link', { href: '/signup' }),
-  });
-};
+export class SignIn extends Block {
+  constructor() {
+    super({});
+  }
 
-export default signIn;
+  init() {
+    this.children.submit = new Button({
+      text: 'Войти',
+      type: 'primary',
+      params: {
+        onClick: '(() => { window.location.href = "/main" })()',
+      },
+    });
+    this.children.link = new Button({
+      text: 'Зарегистрироваться',
+      type: 'link',
+      params: { href: '/signup' },
+    });
+    this.children.textboxLogin = new Textbox({
+      name: 'login',
+      label: 'Логин',
+      placeholder: 'Введите логин',
+      inputType: 'text',
+    });
+    this.children.textboxPassword = new Textbox({
+      name: 'password',
+      label: 'Пароль',
+      placeholder: 'Введите пароль',
+      inputType: 'password',
+    });
+  }
+
+  render() {
+    console.log('ASDDSADA');
+    return this.compile(tpl, {});
+  }
+}

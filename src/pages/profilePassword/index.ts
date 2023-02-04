@@ -1,20 +1,38 @@
 import tpl from './tpl.hbs';
 import './../profile/style.scss';
 import './style.scss';
-import profileField from '../../components/profileField';
-import button from '../../components/button';
 import { passwordFields } from '../../utils/constants';
+import Block from '../../components/common/Block';
+import { Button } from '../../components/button';
+import { ProfileField } from '../../components/profileField';
 
-const profilePassword = () => {
-  const fieldsHtml = passwordFields.map((f) =>
-    profileField(f.name, f.label, f.placeholder, f.value, 'password', false),
-  );
-  return tpl({
-    fields: fieldsHtml,
-    buttonSave: button('Сохранить', 'primary', {
-      onClick: '(() => { window.location.href = "/profile" })()',
-    }),
-  });
-};
+export class ProfilePassword extends Block {
+  constructor() {
+    super({});
+  }
 
-export default profilePassword;
+  init() {
+    this.children.buttonSave = new Button({
+      text: 'Сохранить',
+      type: 'primary',
+      params: {
+        onClick: '(() => { window.location.href = "/profile" })()',
+      },
+    });
+    this.children.fieldsHtml = passwordFields.map(
+      (f) =>
+        new ProfileField({
+          name: f.name,
+          label: f.label,
+          placeholder: f.placeholder,
+          value: f.value,
+          type: 'password',
+          isDisabled: false,
+        })
+    );
+  }
+
+  render() {
+    return this.compile(tpl, { ...this.props });
+  }
+}

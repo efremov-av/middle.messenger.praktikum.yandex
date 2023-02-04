@@ -1,10 +1,13 @@
 import tpl from './tpl.hbs';
 import './style.scss';
+import Block from '../../components/common/Block';
 
-const mainPage = () => {
-  return tpl({
-    chatsList: '<div class="main-chats-list__empty">Нет чатов</div>',
-  });
-};
+export class MainPage extends Block {
+  constructor() {
+    super({});
+  }
 
-export default mainPage;
+  render() {
+    return this.compile(tpl, {});
+  }
+}

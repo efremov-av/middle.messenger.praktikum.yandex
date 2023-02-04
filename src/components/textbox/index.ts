@@ -1,8 +1,20 @@
 import tpl from './tpl.hbs';
 import './style.scss';
+import Block from '../common/Block';
 
-const textbox = (label: string, name: string, inputType: string, placeholder: string) => {
-  return tpl({ label, name, inputType, placeholder });
+type PropsType = {
+  name: string;
+  label: string;
+  placeholder: string;
+  inputType: string;
 };
 
-export default textbox;
+export class Textbox extends Block<PropsType> {
+  constructor(props: PropsType) {
+    super(props);
+  }
+
+  render(): DocumentFragment {
+    return this.compile(tpl, { ...this.props });
+  }
+}

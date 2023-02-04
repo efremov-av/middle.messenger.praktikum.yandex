@@ -1,30 +1,52 @@
 import tpl from './tpl.hbs';
 import './style.scss';
-import profileField from '../../components/profileField';
-import profileButton from '../../components/profileButton';
-import profileAvatarEdit from '../../components/profileAvatarEdit';
+import { ProfileField } from '../../components/profileField';
+import { ProfileButton } from '../../components/profileButton';
 import { profileFields } from '../../utils/constants';
+import Block from '../../components/common/Block';
+import { ProfileAvatarEdit } from '../../components/profileAvatarEdit';
 
-type ProfileFieldType = {
-  name: string;
-  label: string;
-  placeholder: string;
-  value: string | undefined;
+type PropsType = {
+  isAvatarEdit: boolean;
 };
 
-const profilePage = (isAvatarEdit: boolean) => {
-  const fieldsHtml = profileFields.map((f: ProfileFieldType) =>
-    profileField(f.name, f.label, f.placeholder, f.value, 'text', true),
-  );
-  return tpl({
-    fields: fieldsHtml,
-    buttonEdit: profileButton('Изменить данные', 'link', 'default', { href: '/profile/edit' }),
-    buttonPassword: profileButton('Изменить  пароль', 'link', 'default', {
-      href: '/profile/password',
-    }),
-    buttonLogout: profileButton('Выйти', 'link', 'danger', { href: '/signin' }),
-    profileAvatarEdit: isAvatarEdit ? profileAvatarEdit() : '',
-  });
-};
+export class ProfilePage extends Block<PropsType> {
+  constructor(props: PropsType) {
+    super(props);
+  }
 
-export default profilePage;
+  init() {
+    this.children.fields = profileFields.map(
+      (f) =>
+        new ProfileField({
+          name: f.name,
+          label: f.label,
+          placeholder: f.placeholder,
+          value: f.value,
+          type: 'text',
+          isDisabled: true,
+        })
+    );
+
+    this.children.buttonEdit = new ProfileButton({
+      text: 'Изменить данные',
+      type: 'link',
+      style: 'default',
+      params: { href: '/profile/edit' },
+    });
+
+    this.children.buttonPassword = new ProfileButton({
+      text: 'Изменить пароль',
+      type: 'link',
+      style: 'default',
+      params: { href: '/profile/password' },
+    });
+
+    this.children.profileAvatarEdit = new ProfileAvatarEdit();
+  }
+
+  render() {
+    return this.compile(tpl, { ...this.props });
+  }
+}
+//profileAvatarEdit: isAvatarEdit ? profileAvatarEdit() : '',
