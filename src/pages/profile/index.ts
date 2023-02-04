@@ -1,16 +1,16 @@
 import tpl from './tpl.hbs';
 import './style.scss';
-import { ProfileField } from '../../components/profileField';
-import { ProfileButton } from '../../components/profileButton';
+import { ProfileField } from '../../components/ProfileField';
+import { ProfileButton } from '../../components/ProfileButton';
 import { profileFields } from '../../utils/constants';
 import Block from '../../components/common/Block';
-import { ProfileAvatarEdit } from '../../components/profileAvatarEdit';
+import { ProfileAvatarEdit } from '../../components/ProfileAvatarEdit';
 
 type PropsType = {
   isAvatarEdit: boolean;
 };
 
-export class ProfilePage extends Block<PropsType> {
+class ProfilePage extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }
@@ -42,11 +42,20 @@ export class ProfilePage extends Block<PropsType> {
       params: { href: '/profile/password' },
     });
 
-    this.children.profileAvatarEdit = new ProfileAvatarEdit();
+    if (this.props.isAvatarEdit) {
+      this.children.profileAvatarEdit = new ProfileAvatarEdit();
+    }
   }
 
   render() {
     return this.compile(tpl, { ...this.props });
   }
 }
-//profileAvatarEdit: isAvatarEdit ? profileAvatarEdit() : '',
+
+export const profilePage = new ProfilePage({
+  isAvatarEdit: false,
+});
+
+export const profilePageEditAvatar = new ProfilePage({
+  isAvatarEdit: true,
+});

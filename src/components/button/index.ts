@@ -5,11 +5,10 @@ import './style.scss';
 
 type PropsType = {
   text: string;
-  type: string;
-  params: {
-    href?: string;
-    onClick?: any;
-  };
+  modificator: string;
+  type?: string;
+  events?: ComponentEvent;
+  href?: string;
 };
 
 export class Button extends Block<PropsType> {
@@ -18,18 +17,18 @@ export class Button extends Block<PropsType> {
   }
 
   render(): DocumentFragment {
-    if (this.props.type === 'link') {
+    if (this.props.modificator === 'link') {
       return this.compile(tplLink, {
         text: this.props.text,
-        type: this.props.type,
-        href: this.props.params.href,
+        type: this.props.modificator,
+        href: this.props.href,
       });
     }
 
     return this.compile(tplBtn, {
       text: this.props.text,
-      type: this.props.type,
-      onClick: this.props.params.onClick,
+      type: this.props.type ?? 'button',
+      modificator: this.props.modificator,
     });
   }
 }

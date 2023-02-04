@@ -1,7 +1,7 @@
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
-import { Button } from '../../components/button';
+import { Button } from '../../components/Button';
 
 type PropsType = {
   status: string;
@@ -16,10 +16,8 @@ export class StatusPage extends Block<PropsType> {
   init() {
     this.children.goBackButton = new Button({
       text: 'Назад к чатам',
-      type: 'link',
-      params: {
-        href: '/main',
-      },
+      modificator: 'link',
+      href: '/main',
     });
   }
 
@@ -27,3 +25,15 @@ export class StatusPage extends Block<PropsType> {
     return this.compile(tpl, { ...this.props });
   }
 }
+
+export const statusPage404 = new StatusPage({
+  status: '404',
+  title: 'Страница не найдена',
+  description: 'Вы уверены что она существует?',
+});
+
+export const statusPage500 = new StatusPage({
+  status: '500',
+  title: 'Упс! Что-то пошло не так...',
+  description: 'Мы уже решаем эту проблему',
+});

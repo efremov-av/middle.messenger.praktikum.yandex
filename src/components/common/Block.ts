@@ -14,7 +14,7 @@ class Block<P extends Record<string, any> = any> {
   protected props: P;
   public children: Record<string, Block | Block[]>;
   private eventBus: () => EventBus;
-  private _element: HTMLElement | null = null;
+  private _element: HTMLElement;
 
   constructor(propsAndChilds: P) {
     const eventBus = new EventBus();
@@ -105,7 +105,7 @@ class Block<P extends Record<string, any> = any> {
 
   private _render() {
     const fragment = this.render();
-    console.log({ fragment });
+    this._removeEvents();
     const newElement = fragment.firstElementChild as HTMLElement;
 
     if (this._element && newElement) {
@@ -160,13 +160,13 @@ class Block<P extends Record<string, any> = any> {
     });
   }
 
-  // private _removeEvents() {
-  //   const { events = {} } = this.props;
+  private _removeEvents() {
+    const { events = {} } = this.props;
 
-  //   Object.keys(events).forEach((eventName) => {
-  //     this._element?.removeEventListener(eventName, events[eventName]);
-  //   });
-  // }
+    Object.keys(events).forEach((eventName) => {
+      this._element?.removeEventListener(eventName, events[eventName]);
+    });
+  }
 
   public show() {
     if (this._element) this._element.style.display = 'block';
@@ -178,7 +178,7 @@ class Block<P extends Record<string, any> = any> {
 
   protected compile(template: (context: any) => string, context: any) {
     const contextAndStubs = { ...context };
-    console.log('children', this.children);
+
     Object.entries(this.children).forEach(([name, component]) => {
       if (Array.isArray(component)) {
         contextAndStubs[name] = component.map((child) => `<div data-id="${child.id}"></div>`);

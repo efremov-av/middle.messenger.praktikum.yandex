@@ -1,6 +1,7 @@
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
+import { pages } from '../../utils/constants';
 
 type PagesType = {
   name: string;
@@ -10,7 +11,7 @@ type PagesType = {
 type PropsType = {
   pages: PagesType[];
 };
-export class PagesList extends Block {
+class PagesList extends Block {
   constructor(props: PropsType) {
     super(props);
   }
@@ -19,3 +20,9 @@ export class PagesList extends Block {
     return this.compile(tpl, this.props);
   }
 }
+
+const signIn = new PagesList({
+  pages,
+});
+
+export default signIn;

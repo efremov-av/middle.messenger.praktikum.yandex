@@ -5,7 +5,6 @@ interface BlockCounstuctor<P extends Record<string, any> = any> {
 }
 
 function render(query: string, block: Block) {
-  console.log({ query, block });
   const root = document.querySelector(query);
 
   if (root === null) {

@@ -1,26 +1,28 @@
-import { Button } from '../../components/button';
+import { Button } from '../../components/Button';
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
-import { Textbox } from '../../components/textbox';
+import { Textbox } from '../../components/Textbox';
+import { getData } from '../../utils/utils';
 
-export class SignUp extends Block {
-  constructor() {
-    super({});
+type PropsType = {
+  events: ComponentEvent;
+};
+class SignUp extends Block {
+  constructor(props: PropsType) {
+    super(props);
   }
 
   init() {
     this.children.submit = new Button({
       text: 'Зарегистрироваться',
-      type: 'primary',
-      params: {
-        onClick: '(() => { window.location.href = "/signin" })()',
-      },
+      type: 'submit',
+      modificator: 'primary',
     });
     this.children.link = new Button({
       text: 'Войти',
-      type: 'link',
-      params: { href: '/signin' },
+      modificator: 'link',
+      href: '/signin',
     });
     this.children.textboxLogin = new Textbox({
       name: 'login',
@@ -70,3 +72,15 @@ export class SignUp extends Block {
     return this.compile(tpl, { ...this.props });
   }
 }
+
+const signUp = new SignUp({
+  events: {
+    submit: (e: Event) => {
+      e.preventDefault();
+      const data = getData(e.target);
+      console.log('API request payload', data);
+    },
+  },
+});
+
+export default signUp;

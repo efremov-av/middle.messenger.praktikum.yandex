@@ -1,6 +1,6 @@
 import tpl from './tpl.hbs';
 import './style.scss';
-import { Button } from '../button';
+import { Button } from '../Button';
 import Block from '../common/Block';
 
 export class ProfileAvatarEdit extends Block {
@@ -11,9 +11,11 @@ export class ProfileAvatarEdit extends Block {
   init() {
     this.children.buttonAvatarUpload = new Button({
       text: 'Поменять',
-      type: 'primary',
-      params: {
-        onClick: '(() => { window.location.href = "/profile" })()',
+      modificator: 'primary',
+      events: {
+        click: () => {
+          window.location.href = '/profile';
+        },
       },
     });
   }

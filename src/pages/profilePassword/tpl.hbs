@@ -14,14 +14,16 @@
             </div>
           </div>
           <div class="profile-title"></div>
-          <div class="profile-form">
-            {{#each fields}}
-            {{{this}}}
-            {{/each}}
-          </div>
-          <div class="profile-control">
-            {{{buttonSave}}}
-          </div>
+          <form id="password_form">
+            <div class="profile-form">
+              {{#each fields}}
+              {{{this}}}
+              {{/each}}
+            </div>
+            <div class="profile-control">
+              {{{buttonSave}}}
+            </div>
+          </form>
         </div>
       </div>
     </div>
