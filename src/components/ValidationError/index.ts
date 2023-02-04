@@ -1,12 +1,12 @@
 import tpl from './tpl.hbs';
 import './style.scss';
-import Block from '../../common/Block';
+import Block from '../common/Block';
 
 type PropsType = {
-  validationMessage: Block;
-  events: ComponentEvent;
+  text: string | null;
 };
-export class ChatMessageBar extends Block<PropsType> {
+
+export class ValidationError extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }
@@ -14,6 +14,7 @@ export class ChatMessageBar extends Block<PropsType> {
   render(): DocumentFragment {
     return this.compile(tpl, {
       ...this.props,
+      text: this.props.text ? `<span>${this.props.text}</span>` : '',
     });
   }
 }

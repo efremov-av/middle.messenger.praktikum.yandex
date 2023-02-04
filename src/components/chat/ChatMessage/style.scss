@@ -1,5 +1,40 @@
+@import "./../../../variables.scss";
+
 .chat-message {
-  padding: 12px;
-  max-width: 420px;
-  background-color: $bg-color-message;
+  margin-top: 15px;
+  display: flex;
+
+  &__container {
+    padding: 12px;
+    max-width: 420px;
+    background-color: $bg-color-message;
+    border-radius: 0 15px 15px 15px;
+    border: 1px solid $border-color-message;
+  }
+
+  &__text {
+    font-size: 13px;
+    line-height: 19px;
+  }
+
+  &__time {
+    margin-top: 4px;
+    font-size: 10px;
+    text-align: right;
+    color: $font-color-1;
+  }
+
+  &_my {
+    flex-flow: row-reverse;
+
+    .chat-message__container {
+      background-color: $bg-color-message-my;
+      border: 1px solid $border-color-message-my;
+      border-radius: 15px 0 15px 15px;
+    }
+
+    .chat-message__time {
+      color: $color-primary;
+    }
+  }
 }

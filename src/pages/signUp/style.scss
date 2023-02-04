@@ -50,11 +50,11 @@
     flex-wrap: wrap;
     gap: 0 12px;
 
-    .textbox {
-      flex-grow: 1;
+    & > div {
+      width: calc(50% - 6px);
     }
 
-    .textbox:first-child {
+    & > div:first-child {
       width: 100%;
     }
   }

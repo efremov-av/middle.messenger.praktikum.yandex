@@ -7,6 +7,7 @@ type PropsType = {
   label: string;
   placeholder: string;
   inputType: string;
+  events?: ComponentEvent;
 };
 
 export class Textbox extends Block<PropsType> {
@@ -15,6 +16,8 @@ export class Textbox extends Block<PropsType> {
   }
 
   render(): DocumentFragment {
-    return this.compile(tpl, { ...this.props });
+    return this.compile(tpl, {
+      ...this.props,
+    });
   }
 }

@@ -4,7 +4,11 @@ import Block from '../../common/Block';
 import { ChatMessage } from '../ChatMessage';
 
 type PropsType = {
-  messages: any[];
+  messages: {
+    text: string;
+    time: string;
+    isMy: boolean;
+  }[];
 };
 
 export class ChatMessages extends Block<PropsType> {
@@ -13,7 +17,7 @@ export class ChatMessages extends Block<PropsType> {
   }
 
   init() {
-    this.children.messages = this.props.messages.map((m) => new ChatMessage({}));
+    this.children.messages = this.props.messages.map((m) => new ChatMessage(m));
   }
 
   render() {

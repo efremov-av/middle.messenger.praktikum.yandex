@@ -1,0 +1,10 @@
+@import "./../../variables.scss";
+
+.validation-error {
+  text-align: left;
+
+  span {
+    color: $color-red;
+    font-size: 11px;
+  }
+}

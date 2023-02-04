@@ -126,6 +126,7 @@ class Block<P extends Record<string, any> = any> {
   }
 
   private _makePropsProxy(props: any) {
+    const self = this;
     const proxyProps = new Proxy(props, {
       get(target: any, prop: string) {
         if (prop.startsWith('_')) {
@@ -140,7 +141,7 @@ class Block<P extends Record<string, any> = any> {
           throw new Error('Нет прав');
         } else {
           target[prop] = val;
-          this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+          self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
           return true;
         }
       },
@@ -154,7 +155,6 @@ class Block<P extends Record<string, any> = any> {
 
   private _addEvents() {
     const { events = {} } = this.props;
-
     Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
     });

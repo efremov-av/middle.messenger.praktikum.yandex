@@ -4,47 +4,56 @@ import './style.scss';
 import Block from '../../components/common/Block';
 import { Textbox } from '../../components/Textbox';
 import { getData } from '../../utils/utils';
+import { validation } from '../../utils/validation';
+import { ValidationError } from '../../components/ValidationError';
 
 type PropsType = {
+  submit: Block;
+  link: Block;
+  textboxLogin: Block;
+  textboxPassword: Block;
+  validationLogin: Block;
+  validationPassword: Block;
   events: ComponentEvent;
 };
+
+const submit = new Button({
+  text: 'Войти',
+  modificator: 'primary',
+  type: 'submit',
+});
+const link = new Button({
+  text: 'Зарегистрироваться',
+  modificator: 'link',
+  href: '/signup',
+});
+const textboxLogin = new Textbox({
+  name: 'login',
+  label: 'Логин',
+  placeholder: 'Введите логин',
+  inputType: 'text',
+  events: {
+    focus: () => {
+      validationLogin.setProps({ text: null });
+    },
+
+    blur: (event: Event) => {
+      const { value } = event.target as HTMLInputElement;
+      console.log(value);
+    },
+  },
+});
+const textboxPassword = new Textbox({
+  name: 'password',
+  label: 'Пароль',
+  placeholder: 'Введите пароль',
+  inputType: 'password',
+});
+const validationLogin = new ValidationError({ text: null });
+const validationPassword = new ValidationError({ text: null });
 class SignIn extends Block {
   constructor(props: PropsType) {
     super(props);
-  }
-
-  init() {
-    this.children.submit = new Button({
-      text: 'Войти',
-      modificator: 'primary',
-      type: 'submit',
-      events: {
-        // click: () => {
-        //   window.location.href = '/main';
-        // },
-        submit: (event: Event) => {
-          event.preventDefault();
-          console.log('SUBMIT');
-        },
-      },
-    });
-    this.children.link = new Button({
-      text: 'Зарегистрироваться',
-      modificator: 'link',
-      href: '/signup',
-    });
-    this.children.textboxLogin = new Textbox({
-      name: 'login',
-      label: 'Логин',
-      placeholder: 'Введите логин',
-      inputType: 'text',
-    });
-    this.children.textboxPassword = new Textbox({
-      name: 'password',
-      label: 'Пароль',
-      placeholder: 'Введите пароль',
-      inputType: 'password',
-    });
   }
 
   render() {
@@ -52,11 +61,28 @@ class SignIn extends Block {
   }
 }
 const signIn = new SignIn({
+  submit,
+  link,
+  textboxLogin,
+  textboxPassword,
+  validationLogin,
+  validationPassword,
   events: {
-    submit: (e: Event) => {
+    submit: function (e: Event) {
       e.preventDefault();
       const data = getData(e.target);
-      console.log('API request payload', data);
+
+      const validationResults: boolean[] = [];
+
+      validationResults.push(validation.login(validationLogin, data.login as string));
+      validationResults.push(validation.password(validationPassword, data.password as string));
+
+      if (!validationResults.some((r) => r === false)) {
+        console.log('API request payload', data);
+        window.location.href = '/main';
+      } else {
+        console.log('validation did not passed');
+      }
     },
   },
 });
