@@ -11,7 +11,7 @@ type PropsType = {
   href?: string;
 };
 
-export class Button extends Block<PropsType> {
+class Button extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }
@@ -32,3 +32,5 @@ export class Button extends Block<PropsType> {
     });
   }
 }
+
+export default Button;

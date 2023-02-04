@@ -1,6 +1,6 @@
 import tpl from './tpl.hbs';
 import './style.scss';
-import { Button } from '../Button';
+import Button from '../Button';
 import Block from '../common/Block';
 
 export class ProfileAvatarEdit extends Block {

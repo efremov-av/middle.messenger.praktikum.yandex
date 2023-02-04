@@ -3,7 +3,7 @@ import './../profile/style.scss';
 import './style.scss';
 import { passwordFields } from '../../utils/constants';
 import Block from '../../components/common/Block';
-import { Button } from '../../components/Button';
+import Button from '../../components/Button';
 import { ProfileField } from '../../components/ProfileField';
 import { getData } from '../../utils/utils';
 
