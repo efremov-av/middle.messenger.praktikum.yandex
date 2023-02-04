@@ -1,4 +1,4 @@
-import Button from '../../components/Button';
+import Button from '../../components/button';
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';

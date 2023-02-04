@@ -1,7 +1,7 @@
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
-import Button from '../../components/Button';
+import Button from '../../components/button';
 
 type PropsType = {
   status: string;
