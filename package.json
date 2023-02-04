@@ -8,7 +8,7 @@
     "build": "parcel build index.html"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alexander Efremov",
   "license": "ISC",
   "targets": {
     "default": {
