@@ -18,7 +18,7 @@
     padding: 30px;
     text-align: center;
 
-    & > form {
+    > form {
       display: flex;
       flex-direction: column;
       min-height: 480px;
@@ -50,11 +50,11 @@
     flex-wrap: wrap;
     gap: 0 12px;
 
-    & > div {
+    > div {
       width: calc(50% - 6px);
     }
 
-    & > div:first-child {
+    > div:first-child {
       width: 100%;
     }
   }

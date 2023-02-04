@@ -38,7 +38,7 @@
     line-clamp: 2;
     -webkit-box-orient: vertical;
 
-    & > span {
+    > span {
       color: black;
       margin-right: 4px;
     }
@@ -56,7 +56,7 @@
     position: absolute;
     top: 34px;
     right: 0;
-    & > div {
+    > div {
       background-color: $color-primary;
       color: #fff;
       height: 20px;
