@@ -39,7 +39,7 @@ export class Chat extends Block<PropsType> {
           const data = getData(e.target);
           const validationResults: boolean[] = [];
 
-          validationResults.push(validation.login(validationMessage, data.message as string));
+          validationResults.push(validation.notEmpty(validationMessage, data.message as string));
 
           if (!validationResults.some((r) => r === false)) {
             console.log('API request payload', data);
