@@ -6,7 +6,7 @@ type PropsType = {
   text: string | null;
 };
 
-export class ValidationError extends Block<PropsType> {
+export class TextboxValidation extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }

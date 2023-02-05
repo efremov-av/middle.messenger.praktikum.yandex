@@ -2,10 +2,11 @@ import Button from '../../components/button';
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
-import { Textbox } from '../../components/textbox';
+import { TextboxInput } from '../../components/textboxInput';
 import { getData } from '../../utils/utils';
-import { ValidationError } from '../../components/ValidationError';
+import { TextboxValidation } from '../../components/textboxValidation';
 import { validation } from '../../utils/validation';
+import { TextboxLabel } from '../../components/textboxLabel';
 
 type PropsType = {
   submit: Block;
@@ -17,6 +18,13 @@ type PropsType = {
   textboxPhone: Block;
   textboxPassword: Block;
   textboxRepeatPassword: Block;
+  labelLogin: Block;
+  labelFirstName: Block;
+  labelSecondName: Block;
+  labelEmail: Block;
+  labelPhone: Block;
+  labelPassword: Block;
+  labelRepeatPassword: Block;
   validationLogin: Block;
   validationFirstName: Block;
   validationSecondName: Block;
@@ -37,56 +45,120 @@ const link = new Button({
   modificator: 'link',
   href: '/signin',
 });
-const textboxLogin = new Textbox({
+const textboxLogin = new TextboxInput({
   name: 'login',
-  label: 'Логин',
   placeholder: 'Введите логин',
   inputType: 'text',
+  events: {
+    focus: () => {
+      validationLogin.setProps({ text: null });
+    },
+
+    blur: (event: Event) => {
+      const { value } = event.target as HTMLInputElement;
+      validation.login(validationLogin, value as string);
+    },
+  },
 });
-const textboxFirstName = new Textbox({
+const textboxFirstName = new TextboxInput({
   name: 'first_name',
-  label: 'Имя',
   placeholder: 'Введите имя',
   inputType: 'text',
+  events: {
+    focus: () => {
+      validationFirstName.setProps({ text: null });
+    },
+
+    blur: (event: Event) => {
+      const { value } = event.target as HTMLInputElement;
+      validation.name(validationFirstName, value as string);
+    },
+  },
 });
-const textboxSecondName = new Textbox({
+const textboxSecondName = new TextboxInput({
   name: 'second_name',
-  label: 'Фамилия',
   placeholder: 'Введите фамилию',
   inputType: 'text',
+  events: {
+    focus: () => {
+      validationSecondName.setProps({ text: null });
+    },
+
+    blur: (event: Event) => {
+      const { value } = event.target as HTMLInputElement;
+      validation.name(validationSecondName, value as string);
+    },
+  },
 });
-const textboxEmail = new Textbox({
+const textboxEmail = new TextboxInput({
   name: 'email',
-  label: 'Email',
   placeholder: 'Введите email',
   inputType: 'text',
+  events: {
+    focus: () => {
+      validationEmail.setProps({ text: null });
+    },
+
+    blur: (event: Event) => {
+      const { value } = event.target as HTMLInputElement;
+      validation.email(validationEmail, value as string);
+    },
+  },
 });
-const textboxPhone = new Textbox({
+const textboxPhone = new TextboxInput({
   name: 'phone',
-  label: 'Телефон',
   placeholder: 'Введите телефон',
   inputType: 'text',
-});
-const textboxPassword = new Textbox({
-  name: 'password',
-  label: 'Пароль',
-  placeholder: 'Введите пароль',
-  inputType: 'text',
-});
-const textboxRepeatPassword = new Textbox({
-  name: 'repeatPassword',
-  label: 'Повторите пароль',
-  placeholder: 'Введите пароль',
-  inputType: 'text',
-});
+  events: {
+    focus: () => {
+      validationPhone.setProps({ text: null });
+    },
 
-const validationLogin = new ValidationError({ text: null });
-const validationFirstName = new ValidationError({ text: null });
-const validationSecondName = new ValidationError({ text: null });
-const validationEmail = new ValidationError({ text: null });
-const validationPhone = new ValidationError({ text: null });
-const validationPassword = new ValidationError({ text: null });
-const validationRepeatPassword = new ValidationError({ text: null });
+    blur: (event: Event) => {
+      const { value } = event.target as HTMLInputElement;
+      validation.phone(validationPhone, value as string);
+    },
+  },
+});
+const textboxPassword = new TextboxInput({
+  name: 'password',
+  placeholder: 'Введите пароль',
+  inputType: 'text',
+  events: {
+    focus: () => {
+      validationPassword.setProps({ text: null });
+    },
+
+    blur: (event: Event) => {
+      const { value } = event.target as HTMLInputElement;
+      validation.password(validationPassword, value as string);
+    },
+  },
+});
+const textboxRepeatPassword = new TextboxInput({
+  name: 'repeatPassword',
+  placeholder: 'Введите пароль',
+  inputType: 'text',
+  events: {
+    focus: () => {
+      validationRepeatPassword.setProps({ text: null });
+    },
+  },
+});
+const labelLogin = new TextboxLabel({ label: 'Логин' });
+const labelFirstName = new TextboxLabel({ label: 'Имя' });
+const labelSecondName = new TextboxLabel({ label: 'Фамилия' });
+const labelEmail = new TextboxLabel({ label: 'Email' });
+const labelPhone = new TextboxLabel({ label: 'Телефон' });
+const labelPassword = new TextboxLabel({ label: 'Пароль' });
+const labelRepeatPassword = new TextboxLabel({ label: 'Повторите пароль' });
+const validationLogin = new TextboxValidation({ text: null });
+const validationFirstName = new TextboxValidation({ text: null });
+const validationSecondName = new TextboxValidation({ text: null });
+const validationEmail = new TextboxValidation({ text: null });
+const validationPhone = new TextboxValidation({ text: null });
+const validationPassword = new TextboxValidation({ text: null });
+const validationRepeatPassword = new TextboxValidation({ text: null });
 class SignUp extends Block {
   constructor(props: PropsType) {
     super(props);
@@ -107,6 +179,13 @@ const signUp = new SignUp({
   textboxPhone,
   textboxPassword,
   textboxRepeatPassword,
+  labelLogin,
+  labelFirstName,
+  labelSecondName,
+  labelEmail,
+  labelPhone,
+  labelPassword,
+  labelRepeatPassword,
   validationLogin,
   validationFirstName,
   validationSecondName,

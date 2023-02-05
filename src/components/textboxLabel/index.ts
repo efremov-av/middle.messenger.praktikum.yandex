@@ -3,14 +3,10 @@ import './style.scss';
 import Block from '../common/Block';
 
 type PropsType = {
-  name: string;
   label: string;
-  placeholder: string;
-  inputType: string;
-  events?: ComponentEvent;
 };
 
-export class Textbox extends Block<PropsType> {
+export class TextboxLabel extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }

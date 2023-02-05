@@ -2,14 +2,17 @@ import Button from '../../components/button';
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
-import { Textbox } from '../../components/textbox';
+import { TextboxInput } from '../../components/textboxInput';
 import { getData } from '../../utils/utils';
 import { validation } from '../../utils/validation';
-import { ValidationError } from '../../components/ValidationError';
+import { TextboxValidation } from '../../components/textboxValidation';
+import { TextboxLabel } from '../../components/textboxLabel';
 
 type PropsType = {
   submit: Block;
   link: Block;
+  labelLogin: Block;
+  labelPassword: Block;
   textboxLogin: Block;
   textboxPassword: Block;
   validationLogin: Block;
@@ -27,9 +30,11 @@ const link = new Button({
   modificator: 'link',
   href: '/signup',
 });
-const textboxLogin = new Textbox({
-  name: 'login',
+const labelLogin = new TextboxLabel({
   label: 'Логин',
+});
+const textboxLogin = new TextboxInput({
+  name: 'login',
   placeholder: 'Введите логин',
   inputType: 'text',
   events: {
@@ -39,18 +44,30 @@ const textboxLogin = new Textbox({
 
     blur: (event: Event) => {
       const { value } = event.target as HTMLInputElement;
-      console.log(value);
+      validation.login(validationLogin, value as string);
     },
   },
 });
-const textboxPassword = new Textbox({
-  name: 'password',
+const labelPassword = new TextboxLabel({
   label: 'Пароль',
+});
+const textboxPassword = new TextboxInput({
+  name: 'password',
   placeholder: 'Введите пароль',
   inputType: 'password',
+  events: {
+    focus: () => {
+      validationPassword.setProps({ text: null });
+    },
+
+    blur: (event: Event) => {
+      const { value } = event.target as HTMLInputElement;
+      validation.password(validationPassword, value as string);
+    },
+  },
 });
-const validationLogin = new ValidationError({ text: null });
-const validationPassword = new ValidationError({ text: null });
+const validationLogin = new TextboxValidation({ text: null });
+const validationPassword = new TextboxValidation({ text: null });
 class SignIn extends Block {
   constructor(props: PropsType) {
     super(props);
@@ -63,6 +80,8 @@ class SignIn extends Block {
 const signIn = new SignIn({
   submit,
   link,
+  labelLogin,
+  labelPassword,
   textboxLogin,
   textboxPassword,
   validationLogin,

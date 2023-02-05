@@ -6,7 +6,7 @@ import { ChatMessageBar } from '../ChatMessageBar';
 import { getData } from '../../../utils/utils';
 import { ChatMessages } from '../ChatMessages';
 import { validation } from '../../../utils/validation';
-import { ValidationError } from '../../ValidationError';
+import { TextboxValidation } from '../../textboxValidation';
 
 type PropsType = {};
 
@@ -23,7 +23,7 @@ const messages = [
   },
 ];
 
-const validationMessage = new ValidationError({ text: null });
+const validationMessage = new TextboxValidation({ text: null });
 export class Chat extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
