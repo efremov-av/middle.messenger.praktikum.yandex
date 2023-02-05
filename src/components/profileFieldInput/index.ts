@@ -4,14 +4,14 @@ import Block from '../common/Block';
 
 type PropsType = {
   name: string;
-  label: string;
   placeholder: string;
   value: string | undefined;
   type: string;
   isDisabled: boolean;
+  events: ComponentEvent;
 };
 
-export class ProfileField extends Block<PropsType> {
+export class ProfileFieldInput extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }

@@ -9,7 +9,7 @@ type PropsType = {
   style: string;
   params: {
     href?: string;
-    onClick?: any;
+    onClick?: () => void;
   };
 };
 

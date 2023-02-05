@@ -16,9 +16,36 @@
           <div class="profile-title"></div>
           <form id="profile_form">
             <div class="profile-form">
-              {{#each fields}}
-              {{{this}}}
-              {{/each}}
+              <div class="profile-field">
+                {{{labelEmail}}}
+                {{{fieldEmail}}}
+                {{{validationEmail}}}
+              </div>
+              <div class="profile-field">
+                {{{labelLogin}}}
+                {{{fieldLogin}}}
+                {{{validationLogin}}}
+              </div>
+              <div class="profile-field">
+                {{{labelFirstName}}}
+                {{{fieldFirstName}}}
+                {{{validationFirstName}}}
+              </div>
+              <div class="profile-field">
+                {{{labelSecondName}}}
+                {{{fieldSecondName}}}
+                {{{validationSecondName}}}
+              </div>
+              <div class="profile-field">
+                {{{labelDisplayName}}}
+                {{{fieldDisplayName}}}
+                {{{validationDisplayName}}}
+              </div>
+              <div class="profile-field">
+                {{{labelPhone}}}
+                {{{fieldPhone}}}
+                {{{validationPhone}}}
+              </div>
             </div>
             <div class="profile-control">
               {{{buttonSave}}}

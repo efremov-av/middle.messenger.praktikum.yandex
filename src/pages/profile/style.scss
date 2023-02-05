@@ -94,6 +94,18 @@
   }
 }
 
+.profile-field {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-bottom: 1px solid $border-color;
+  position: relative;
+
+  &:last-child {
+    border: none;
+  }
+}
+
 .gg-arrow-left {
   box-sizing: border-box;
   position: relative;

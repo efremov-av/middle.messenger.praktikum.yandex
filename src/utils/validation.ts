@@ -156,8 +156,6 @@ export const validation = {
       isValid = true;
     }
 
-    console.log({ value, secondValue });
-
     if (!isValid) {
       block.setProps({ text: text });
     } else {

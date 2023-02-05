@@ -15,25 +15,25 @@ export const profileFields = [
     name: 'first_name',
     label: 'Имя',
     placeholder: 'Введите имя',
-    value: 'ivanivanov',
+    value: 'Иван',
   },
   {
     name: 'second_name',
     label: 'Фамилия',
     placeholder: 'Введите фамилию',
-    value: 'ivanivanov',
+    value: 'Иванов',
   },
   {
     name: 'display_name',
     label: 'Имя в чате',
     placeholder: 'Введите имя в чате',
-    value: 'ivanivanov',
+    value: 'Ваня',
   },
   {
     name: 'phone',
     label: 'Телефон',
     placeholder: 'Введите телефон',
-    value: 'ivanivanov',
+    value: '+79141234567',
   },
 ];
 

@@ -1,5 +1,5 @@
-import tpl from './tpl.hbs';
-import './style.scss';
+import tpl from './../profile/tpl.hbs';
+import './../profile/style.scss';
 import { ProfileFieldInput } from '../../components/profileFieldInput';
 import { ProfileButton } from '../../components/profileButton';
 import Block from '../../components/common/Block';
@@ -177,7 +177,7 @@ class ProfilePage extends Block<PropsType> {
   }
 }
 
-export const profilePage = new ProfilePage({
+export const profileAvatarPage = new ProfilePage({
   fieldEmail,
   fieldFirstName,
   fieldLogin,
@@ -198,5 +198,5 @@ export const profilePage = new ProfilePage({
   validationSecondName,
   buttonEdit,
   buttonPassword,
-  isAvatarEdit: false,
+  isAvatarEdit: true,
 });

@@ -16,9 +16,21 @@
           <div class="profile-title"></div>
           <form id="password_form">
             <div class="profile-form">
-              {{#each fields}}
-              {{{this}}}
-              {{/each}}
+              <div class="profile-field">
+                {{{labelOldPassword}}}
+                {{{fieldOldPassword}}}
+                {{{validationOldPassword}}}
+              </div>
+              <div class="profile-field">
+                {{{labelNewPassword}}}
+                {{{fieldNewPassword}}}
+                {{{validationNewPassword}}}
+              </div>
+              <div class="profile-field">
+                {{{labelRepeatNewPassword}}}
+                {{{fieldRepeatNewPassword}}}
+                {{{validationRepeatNewPassword}}}
+              </div>
             </div>
             <div class="profile-control">
               {{{buttonSave}}}

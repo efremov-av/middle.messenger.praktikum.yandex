@@ -1,5 +1,5 @@
 class EventBus {
-  listeners: any;
+  listeners: Record<string, any>;
 
   constructor() {
     this.listeners = {};

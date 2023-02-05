@@ -19,10 +19,10 @@ class Block<P extends Record<string, any> = any> {
   constructor(propsAndChilds: P) {
     const eventBus = new EventBus();
 
-    const asd = this._getChildren(propsAndChilds);
+    const { children, props } = this._getChildren(propsAndChilds);
 
-    this.children = asd.children;
-    this.props = this._makePropsProxy(asd.props);
+    this.children = children;
+    this.props = this._makePropsProxy(props as P);
 
     this.eventBus = () => eventBus;
 
@@ -30,7 +30,7 @@ class Block<P extends Record<string, any> = any> {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  private _getChildren(propsAndChilds: any) {
+  private _getChildren(propsAndChilds: P) {
     const children: Record<string, Block | Block[]> = {};
     const props: Record<string, any> = {};
 
@@ -48,7 +48,7 @@ class Block<P extends Record<string, any> = any> {
     return { children, props };
   }
 
-  private _registerEvents(eventBus: any) {
+  private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -91,7 +91,7 @@ class Block<P extends Record<string, any> = any> {
     return true;
   }
 
-  public setProps = (nextProps: any) => {
+  public setProps = (nextProps: P) => {
     if (!nextProps) {
       return;
     }
@@ -125,7 +125,7 @@ class Block<P extends Record<string, any> = any> {
     return this.element;
   }
 
-  private _makePropsProxy(props: any) {
+  private _makePropsProxy(props: P) {
     const self = this;
     const proxyProps = new Proxy(props, {
       get(target: any, prop: string) {
