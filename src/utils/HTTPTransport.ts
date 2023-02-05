@@ -17,20 +17,21 @@ function queryStringify(url: string, data: any) {
   return url + (arr.length > 0 ? '?' + arr.join('&') : '');
 }
 
+type HTTPMethod = (url: string, options?: any) => Promise<unknown>;
 class HTTPTransport {
-  get = (url: string, options: any = {}) => {
+  get: HTTPMethod = (url, options = {}) => {
     return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
   };
 
-  put = (url: string, options: any = {}) => {
+  put: HTTPMethod = (url, options = {}) => {
     return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
   };
 
-  post = (url: string, options: any = {}) => {
+  post: HTTPMethod = (url, options = {}) => {
     return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
   };
 
-  delete = (url: string, options: any = {}) => {
+  delete: HTTPMethod = (url, options = {}) => {
     return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
   };
 
