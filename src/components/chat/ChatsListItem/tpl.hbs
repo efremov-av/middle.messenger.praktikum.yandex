@@ -1,0 +1,15 @@
+<div class="chats-list-item">
+  <div>
+    <div class="chats-list-item__avatar"></div>
+  </div>
+  <div>
+    <div class="chats-list-item__title">{{title}}</div>
+    {{#with message}}
+    <div class="chats-list-item__message">
+      {{{text}}}
+    </div>
+    <div class="chats-list-item__date">{{date}}</div>
+    {{/with}}
+    <div class="chats-list-item__unread">{{{unreadedMessagesCount}}}</div>
+  </div>
+</div>

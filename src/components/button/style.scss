@@ -1,7 +1,7 @@
 @import "./../../variables.scss";
 
 .button {
-  background-color: #f6f6f6;
+  background-color: $bg-color-button;
   border-radius: 8px;
   height: 37px;
   border: 1px solid #cbcbcb;
@@ -13,12 +13,12 @@
     background-color: transparent;
     border: none;
     text-decoration: none;
-    color: $primary-color;
+    color: $color-primary;
   }
 
   &_primary {
     border: none;
-    background-color: $primary-color;
-    color: #ffffff;
+    background-color: $color-primary;
+    color: $color-white;
   }
 }

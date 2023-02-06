@@ -3,20 +3,48 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm run build && node server.js",
+    "start": "npm run build && node server.js --open",
     "dev": "parcel index.html",
     "build": "parcel build index.html"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alexander Efremov",
   "license": "ISC",
+  "targets": {
+    "default": {
+      "engines": {
+        "browsers": ">= 50%"
+      },
+      "sourceMap": false
+    }
+  },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.8.2",
-    "express": "^4.18.2",
-    "parcel": "^2.8.2",
-    "parcel-transformer-hbs": "^1.0.4"
+    "@babel/eslint-parser": "7.19.1",
+    "@parcel/transformer-sass": "2.8.2",
+    "@types/express": "4.17.16",
+    "@types/node": "18.11.18",
+    "@types/uuid": "9.0.0",
+    "@typescript-eslint/eslint-plugin": "5.50.0",
+    "@typescript-eslint/parser": "5.50.0",
+    "babel-eslint": "10.1.0",
+    "eslint": "8.33.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "8.6.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-react": "7.32.2",
+    "handlebars": "4.7.7",
+    "parcel": "2.8.2",
+    "parcel-transformer-hbs": "1.0.4",
+    "prettier": "2.8.3",
+    "stylelint": "14.16.1",
+    "stylelint-scss": "4.3.0",
+    "typescript": "4.9.4",
+    "uuid": "9.0.0"
   },
   "dependencies": {
-    "handlebars": "^4.7.7"
+    "express": "4.18.2",
+    "normalize-scss": "7.0.1"
   }
 }

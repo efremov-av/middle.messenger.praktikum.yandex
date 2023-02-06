@@ -1,0 +1,10 @@
+@import "./../../variables.scss";
+
+.textbox-validation {
+  text-align: left;
+
+  span {
+    color: $color-red;
+    font-size: 11px;
+  }
+}

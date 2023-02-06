@@ -21,12 +21,28 @@
 
   &-chats-list {
     background-color: #fbfbfb;
-    border-right: 1px solid #eaeaea;
-    padding: 10px;
+    border-right: 1px solid $border-color;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-top: 10px;
 
     &__header {
-      padding: 14px 0;
-      border-bottom: 1px solid #eaeaea;
+      padding: 14px 10px;
+      border-bottom: 1px solid $border-color;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+
+    &__content {
+      padding: 0 10px;
+      flex-grow: 1;
+      flex-shrink: 1;
+      padding-bottom: 20px;
+      overflow-y: auto;
+      position: relative;
+      top: 0;
+      bottom: 0;
     }
 
     &__profile {
@@ -34,7 +50,7 @@
       font-size: 12px;
       line-height: 12px;
 
-      & > a {
+      > a {
         text-decoration: none;
         color: $font-color-1;
 
@@ -53,6 +69,7 @@
         height: 32px;
         width: 100%;
         padding: 0 20px;
+        font-size: 12px;
         border: none;
 
         &::placeholder {
