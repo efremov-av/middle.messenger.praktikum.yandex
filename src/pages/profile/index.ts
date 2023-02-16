@@ -1,13 +1,16 @@
 import tpl from './tpl.hbs';
 import './style.scss';
-import { ProfileFieldInput } from '../../components/profileFieldInput';
-import { ProfileButton } from '../../components/profileButton';
+import { ProfileFieldInput } from '../../components/profile/profileFieldInput';
+import { ProfileButton } from '../../components/profile/profileButton';
 import Block from '../../components/common/Block';
-import { ProfileAvatarEdit } from '../../components/profileAvatarEdit';
+import { ProfileAvatarEdit } from '../../components/profile/profileAvatarEdit';
 import { validation } from '../../utils/validation';
-import { ProfileFieldLabel } from '../../components/profileFieldLabel';
-import { ProfileFieldValidation } from '../../components/profileFieldValidation';
-import { profileFields } from '../../utils/constants';
+import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
+import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
+import { profileFields, Routes } from '../../utils/constants';
+import { ProfileGoBackButton } from '../../components/profile/ProfileGoBackButton';
+import Router from '../../utils/Router';
+import { ProfileAvatarButton } from '../../components/profile/ProfileAvatarButton';
 
 type PropsType = {
   fieldLogin: Block;
@@ -152,16 +155,41 @@ const buttonEdit = new ProfileButton({
   text: 'Изменить данные',
   type: 'link',
   style: 'default',
-  params: { href: '/profile/edit' },
+  events: {
+    click: () => {
+      Router.go(Routes.ProfileEdit);
+    },
+  },
 });
 
 const buttonPassword = new ProfileButton({
   text: 'Изменить пароль',
   type: 'link',
   style: 'default',
-  params: { href: '/profile/password' },
+  events: {
+    click: () => {
+      Router.go(Routes.ProfilePassword);
+    },
+  },
 });
-class ProfilePage extends Block<PropsType> {
+
+const goBackButton = new ProfileGoBackButton({
+  events: {
+    click: () => {
+      Router.go(Routes.Main);
+    },
+  },
+});
+
+const profileAvatarButton = new ProfileAvatarButton({
+  events: {
+    click: () => {
+      Router.go(Routes.ProfileAvatar);
+    },
+  },
+});
+
+export class ProfilePage extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }
@@ -177,7 +205,7 @@ class ProfilePage extends Block<PropsType> {
   }
 }
 
-export const profilePage = new ProfilePage({
+export const profilePageProps = {
   fieldEmail,
   fieldFirstName,
   fieldLogin,
@@ -198,5 +226,33 @@ export const profilePage = new ProfilePage({
   validationSecondName,
   buttonEdit,
   buttonPassword,
+  goBackButton,
+  profileAvatarButton,
   isAvatarEdit: false,
-});
+};
+
+export const profileAvatarPageProps = {
+  fieldEmail,
+  fieldFirstName,
+  fieldLogin,
+  fieldDisplayName,
+  fieldPhone,
+  fieldSecondName,
+  labelEmail,
+  labelFirstName,
+  labelLogin,
+  labelDisplayName,
+  labelPhone,
+  labelSecondName,
+  validationEmail,
+  validationFirstName,
+  validationLogin,
+  validationDisplayName,
+  validationPhone,
+  validationSecondName,
+  buttonEdit,
+  buttonPassword,
+  goBackButton,
+  profileAvatarButton,
+  isAvatarEdit: true,
+};

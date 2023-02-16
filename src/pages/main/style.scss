@@ -50,9 +50,12 @@
       font-size: 12px;
       line-height: 12px;
 
-      > a {
+      > button {
+        border: none;
+        background: none;
         text-decoration: none;
         color: $font-color-1;
+        cursor: pointer;
 
         &:hover {
           text-decoration: underline;

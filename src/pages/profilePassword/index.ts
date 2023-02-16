@@ -3,11 +3,13 @@ import './../profile/style.scss';
 import './style.scss';
 import Block from '../../components/common/Block';
 import Button from '../../components/button';
-import { ProfileFieldInput } from '../../components/profileFieldInput';
+import { ProfileFieldInput } from '../../components/profile/profileFieldInput';
 import { getData } from '../../utils/utils';
-import { ProfileFieldLabel } from '../../components/profileFieldLabel';
-import { ProfileFieldValidation } from '../../components/profileFieldValidation';
+import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
+import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { validation } from '../../utils/validation';
+import Router from '../../utils/Router';
+import { Routes } from '../../utils/constants';
 
 type PropsType = {
   fieldOldPassword: Block;
@@ -90,7 +92,7 @@ export class ProfilePassword extends Block {
   }
 }
 
-const profilePassword = new ProfilePassword({
+export const profilePasswordProps = {
   fieldNewPassword,
   fieldOldPassword,
   fieldRepeatNewPassword,
@@ -124,11 +126,10 @@ const profilePassword = new ProfilePassword({
 
       if (!validationResults.some((r) => r === false)) {
         console.log('API request payload', data);
-        window.location.href = '/profile';
+        Router.go(Routes.Profile);
       } else {
         console.log('validation did not passed');
       }
     },
   },
-});
-export default profilePassword;
+};

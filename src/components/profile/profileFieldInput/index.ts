@@ -1,6 +1,6 @@
 import tpl from './tpl.hbs';
 import './style.scss';
-import Block from '../common/Block';
+import Block from '../../common/Block';
 
 type PropsType = {
   name: string;

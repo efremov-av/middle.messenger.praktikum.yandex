@@ -3,6 +3,9 @@ import './style.scss';
 import Block from '../../components/common/Block';
 import { ChatsList } from '../../components/chat/ChatsList';
 import { Chat } from '../../components/chat/Chat';
+import { ChatProfileLink } from '../../components/chat/ChatProfileLink';
+import { Routes } from '../../utils/constants';
+import Router from '../../utils/Router';
 
 const chats = [
   {
@@ -26,7 +29,7 @@ const chats = [
     avatarUrl: 'http://example',
   },
 ];
-class MainPage extends Block {
+export class MainPage extends Block {
   constructor() {
     super({});
   }
@@ -35,12 +38,17 @@ class MainPage extends Block {
     this.children.chatsList = new ChatsList({ chats });
 
     this.children.chat = new Chat({});
+
+    this.children.chatProfileLink = new ChatProfileLink({
+      events: {
+        click: () => {
+          Router.go(Routes.Profile);
+        },
+      },
+    });
   }
 
   render() {
     return this.compile(tpl, {});
   }
 }
-
-const mainPage = new MainPage();
-export default mainPage;

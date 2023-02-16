@@ -3,12 +3,13 @@ import './../profile/style.scss';
 import './style.scss';
 import Block from '../../components/common/Block';
 import Button from '../../components/button';
-import { ProfileFieldInput } from '../../components/profileFieldInput';
+import { ProfileFieldInput } from '../../components/profile/profileFieldInput';
 import { getData } from '../../utils/utils';
-import { ProfileFieldLabel } from '../../components/profileFieldLabel';
-import { ProfileFieldValidation } from '../../components/profileFieldValidation';
+import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
+import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { validation } from '../../utils/validation';
-import { profileFields } from '../../utils/constants';
+import { profileFields, Routes } from '../../utils/constants';
+import Router from '../../utils/Router';
 
 type PropsType = {
   fieldLogin: Block;
@@ -164,7 +165,7 @@ export class ProfileEditPage extends Block {
   }
 }
 
-const profileEditPage = new ProfileEditPage({
+export const profileEditPageProps = {
   fieldEmail,
   fieldFirstName,
   fieldLogin,
@@ -200,11 +201,10 @@ const profileEditPage = new ProfileEditPage({
 
       if (!validationResults.some((r) => r === false)) {
         console.log('API request payload', data);
-        window.location.href = '/signin';
+        Router.go(Routes.Profile);
       } else {
         console.log('validation did not passed');
       }
     },
   },
-});
-export default profileEditPage;
+};

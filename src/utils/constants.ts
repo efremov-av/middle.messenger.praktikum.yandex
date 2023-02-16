@@ -84,3 +84,16 @@ export const pages = [
     url: '/500',
   },
 ];
+
+export enum Routes {
+  Index = '/',
+  Main = '/main',
+  SignUp = '/signup',
+  SignIn = '/signin',
+  Profile = '/profile',
+  ProfileEdit = '/profile/edit',
+  ProfilePassword = '/profile/password',
+  ProfileAvatar = '/profile/avatar',
+  Page500 = '/500',
+  Page404 = '/404',
+}

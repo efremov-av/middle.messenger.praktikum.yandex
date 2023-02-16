@@ -1,27 +1,26 @@
 import './style.scss';
-import mainPage from './pages/main';
-import signUp from './pages/signUp';
-import signIn from './pages/signIn';
-import { profilePage } from './pages/profile';
-import profileEditPage from './pages/profileEdit';
-import profilePassword from './pages/profilePassword';
-import { statusPage404, statusPage500 } from './pages/status';
-import pagesList from './pages/pagesList';
-import Block from './components/common/Block';
-import { render } from './utils/renderDOM';
-import { profileAvatarPage } from './pages/profileAvatar';
+import { MainPage } from './pages/main';
+import { SignUp, signUpProps } from './pages/signUp';
+import { SignIn, signInProps } from './pages/signIn';
+import { profileAvatarPageProps, ProfilePage, profilePageProps } from './pages/profile';
+import { ProfileEditPage, profileEditPageProps } from './pages/profileEdit';
+import { ProfilePassword, profilePasswordProps } from './pages/profilePassword';
+import { StatusPage, statusPage404Props, statusPage500Props } from './pages/status';
+import { pageListProps, PagesList } from './pages/pagesList';
+import Router from './utils/Router';
+import { Routes } from './utils/constants';
 
-const routes: Record<string, Block> = {
-  '/': pagesList,
-  '/main': mainPage,
-  '/signin': signIn,
-  '/signup': signUp,
-  '/profile': profilePage,
-  '/profile/edit': profileEditPage,
-  '/profile/password': profilePassword,
-  '/profile/avatar': profileAvatarPage,
-  '/404': statusPage404,
-  '/500': statusPage500,
-};
+window.addEventListener('DOMContentLoaded', () => {
+  Router.use(Routes.Index, PagesList, pageListProps);
+  Router.use(Routes.Main, MainPage);
+  Router.use(Routes.SignIn, SignIn, signInProps);
+  Router.use(Routes.SignUp, SignUp, signUpProps);
+  Router.use(Routes.Profile, ProfilePage, profilePageProps);
+  Router.use(Routes.ProfileEdit, ProfileEditPage, profileEditPageProps);
+  Router.use(Routes.ProfilePassword, ProfilePassword, profilePasswordProps);
+  Router.use(Routes.ProfileAvatar, ProfilePage, profileAvatarPageProps);
+  Router.use(Routes.Page500, StatusPage, statusPage500Props);
+  Router.use(Routes.Page404, StatusPage, statusPage404Props);
 
-render('#root', routes[window.location.pathname]);
+  Router.start();
+});

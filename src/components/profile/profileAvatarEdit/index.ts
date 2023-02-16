@@ -1,7 +1,7 @@
 import tpl from './tpl.hbs';
 import './style.scss';
-import Button from '../button';
-import Block from '../common/Block';
+import Button from '../../button';
+import Block from '../../common/Block';
 
 export class ProfileAvatarEdit extends Block {
   constructor() {

@@ -7,6 +7,8 @@ import { getData } from '../../utils/utils';
 import { validation } from '../../utils/validation';
 import { TextboxValidation } from '../../components/textboxValidation';
 import { TextboxLabel } from '../../components/textboxLabel';
+import Router from '../../utils/Router';
+import { Routes } from '../../utils/constants';
 
 type PropsType = {
   submit: Block;
@@ -28,7 +30,12 @@ const submit = new Button({
 const link = new Button({
   text: 'Зарегистрироваться',
   modificator: 'link',
-  href: '/signup',
+  type: 'button',
+  events: {
+    click: () => {
+      Router.go(Routes.SignUp);
+    },
+  },
 });
 const labelLogin = new TextboxLabel({
   label: 'Логин',
@@ -68,7 +75,7 @@ const textboxPassword = new TextboxInput({
 });
 const validationLogin = new TextboxValidation({ text: null });
 const validationPassword = new TextboxValidation({ text: null });
-class SignIn extends Block {
+export class SignIn extends Block {
   constructor(props: PropsType) {
     super(props);
   }
@@ -77,7 +84,7 @@ class SignIn extends Block {
     return this.compile(tpl, {});
   }
 }
-const signIn = new SignIn({
+export const signInProps = {
   submit,
   link,
   labelLogin,
@@ -98,12 +105,10 @@ const signIn = new SignIn({
 
       if (!validationResults.some((r) => r === false)) {
         console.log('API request payload', data);
-        window.location.href = '/main';
+        Router.go(Routes.Main);
       } else {
         console.log('validation did not passed');
       }
     },
   },
-});
-
-export default signIn;
+};

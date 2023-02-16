@@ -1,6 +1,5 @@
 import Block from '../common/Block';
 import tplBtn from './tplBtn.hbs';
-import tplLink from './tplLink.hbs';
 import './style.scss';
 
 type PropsType = {
@@ -8,7 +7,6 @@ type PropsType = {
   modificator: string;
   type?: string;
   events?: ComponentEvent;
-  href?: string;
 };
 
 class Button extends Block<PropsType> {
@@ -17,14 +15,6 @@ class Button extends Block<PropsType> {
   }
 
   render(): DocumentFragment {
-    if (this.props.modificator === 'link') {
-      return this.compile(tplLink, {
-        text: this.props.text,
-        type: this.props.modificator,
-        href: this.props.href,
-      });
-    }
-
     return this.compile(tplBtn, {
       text: this.props.text,
       type: this.props.type ?? 'button',

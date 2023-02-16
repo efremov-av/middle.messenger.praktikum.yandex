@@ -18,21 +18,31 @@ function queryStringify(url: string, data: any) {
 }
 
 type HTTPMethod = (url: string, options?: any) => Promise<unknown>;
-class HTTPTransport {
+export default class HTTPTransport {
+  public _baseUrl: string;
+
+  constructor(baseUrl: string) {
+    this._baseUrl = baseUrl;
+  }
+
+  private fullUrl = (url: string) => {
+    return `${this._baseUrl}${url}`;
+  };
+
   get: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+    return this.request(this.fullUrl(url), { ...options, method: METHODS.GET }, options.timeout);
   };
 
   put: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+    return this.request(this.fullUrl(url), { ...options, method: METHODS.PUT }, options.timeout);
   };
 
   post: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+    return this.request(this.fullUrl(url), { ...options, method: METHODS.POST }, options.timeout);
   };
 
   delete: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+    return this.request(this.fullUrl(url), { ...options, method: METHODS.DELETE }, options.timeout);
   };
 
   request = (url: string, options: any, timeout: number = 5000) => {
