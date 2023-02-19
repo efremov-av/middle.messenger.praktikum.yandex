@@ -7,7 +7,7 @@ import { ProfileEditPage, profileEditPageProps } from './pages/profileEdit';
 import { ProfilePassword, profilePasswordProps } from './pages/profilePassword';
 import { StatusPage, statusPage404Props, statusPage500Props } from './pages/status';
 import { pageListProps, PagesList } from './pages/pagesList';
-import Router from './utils/Router';
+import Router from './services/Router/Router';
 import { Routes } from './utils/constants';
 
 window.addEventListener('DOMContentLoaded', () => {

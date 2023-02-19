@@ -5,7 +5,7 @@ import { ChatsList } from '../../components/chat/ChatsList';
 import { Chat } from '../../components/chat/Chat';
 import { ChatProfileLink } from '../../components/chat/ChatProfileLink';
 import { Routes } from '../../utils/constants';
-import Router from '../../utils/Router';
+import Router from '../../services/Router/Router';
 
 const chats = [
   {

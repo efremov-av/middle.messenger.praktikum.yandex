@@ -8,7 +8,8 @@ import { TextboxValidation } from '../../components/textboxValidation';
 import { validation } from '../../utils/validation';
 import { TextboxLabel } from '../../components/textboxLabel';
 import { Routes } from '../../utils/constants';
-import Router from '../../utils/Router';
+import Router from '../../services/Router/Router';
+import AuthController from '../../controllers/AuthController';
 
 type PropsType = {
   submit: Block;
@@ -201,7 +202,7 @@ export const signUpProps = {
   validationPassword,
   validationRepeatPassword,
   events: {
-    submit: function (e: Event) {
+    submit: async function (e: Event) {
       e.preventDefault();
       const data = getData(e.target);
 
@@ -223,7 +224,26 @@ export const signUpProps = {
 
       if (!validationResults.some((r) => r === false)) {
         console.log('API request payload', data);
-        Router.go(Routes.SignIn);
+        const response = await AuthController.signUp({
+          first_name: data.first_name as string,
+          second_name: data.second_name as string,
+          login: data.login as string,
+          email: data.email as string,
+          password: data.password as string,
+          phone: data.phone as string,
+        });
+        if (!response.isError) {
+          alert('Вы успешно зарегистрировались!');
+          Router.go(Routes.SignIn);
+        } else {
+          let errorText = '';
+          try {
+            errorText = JSON.parse(response.data).reason;
+          } catch {
+            errorText = 'Unexpected error';
+          }
+          alert(errorText);
+        }
       } else {
         console.log('validation did not passed');
       }

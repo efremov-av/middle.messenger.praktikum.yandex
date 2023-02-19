@@ -1,4 +1,4 @@
-import Block from '../components/common/Block';
+import Block from '../../components/common/Block';
 
 interface BlockCounstuctor<P extends Record<string, any> = any> {
   new (props: P): Block<P>;

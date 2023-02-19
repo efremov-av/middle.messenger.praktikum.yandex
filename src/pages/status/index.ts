@@ -2,7 +2,7 @@ import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
 import Button from '../../components/button';
-import Router from '../../utils/Router';
+import Router from '../../services/Router/Router';
 import { Routes } from '../../utils/constants';
 
 type PropsType = {

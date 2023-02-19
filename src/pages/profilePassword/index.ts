@@ -8,7 +8,7 @@ import { getData } from '../../utils/utils';
 import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
 import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { validation } from '../../utils/validation';
-import Router from '../../utils/Router';
+import Router from '../../services/Router/Router';
 import { Routes } from '../../utils/constants';
 
 type PropsType = {

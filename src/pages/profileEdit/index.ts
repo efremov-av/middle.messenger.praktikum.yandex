@@ -9,7 +9,7 @@ import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
 import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { validation } from '../../utils/validation';
 import { profileFields, Routes } from '../../utils/constants';
-import Router from '../../utils/Router';
+import Router from '../../services/Router/Router';
 
 type PropsType = {
   fieldLogin: Block;

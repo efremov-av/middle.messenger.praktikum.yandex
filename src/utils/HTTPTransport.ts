@@ -5,6 +5,19 @@ const METHODS = {
   DELETE: 'DELETE',
 };
 
+export type HttpOptionsType = {
+  method?: string;
+  data?: Record<string, unknown>;
+  headers?: Record<string, string>;
+  timeout?: number;
+  withCredentials?: boolean;
+};
+
+export type HttpResponsePromiseType = {
+  isError: boolean;
+  data: any;
+};
+
 function queryStringify(url: string, data: any) {
   let arr: string[] = [];
   Object.keys(data).forEach((key) => {
@@ -17,12 +30,14 @@ function queryStringify(url: string, data: any) {
   return url + (arr.length > 0 ? '?' + arr.join('&') : '');
 }
 
-type HTTPMethod = (url: string, options?: any) => Promise<unknown>;
+type HTTPMethod = (url: string, options?: HttpOptionsType) => Promise<unknown>;
 export default class HTTPTransport {
-  public _baseUrl: string;
+  private _baseUrl: string;
+  private _headers: Record<string, string>;
 
-  constructor(baseUrl: string) {
+  constructor(baseUrl: string, headers: Record<string, string>) {
     this._baseUrl = baseUrl;
+    this._headers = headers;
   }
 
   private fullUrl = (url: string) => {
@@ -30,24 +45,38 @@ export default class HTTPTransport {
   };
 
   get: HTTPMethod = (url, options = {}) => {
-    return this.request(this.fullUrl(url), { ...options, method: METHODS.GET }, options.timeout);
+    return this.requestPromise(
+      this.request(this.fullUrl(url), { ...options, method: METHODS.GET })
+    );
   };
 
   put: HTTPMethod = (url, options = {}) => {
-    return this.request(this.fullUrl(url), { ...options, method: METHODS.PUT }, options.timeout);
+    return this.requestPromise(
+      this.request(this.fullUrl(url), { ...options, method: METHODS.PUT })
+    );
   };
 
   post: HTTPMethod = (url, options = {}) => {
-    return this.request(this.fullUrl(url), { ...options, method: METHODS.POST }, options.timeout);
+    return this.requestPromise(
+      this.request(this.fullUrl(url), { ...options, method: METHODS.POST })
+    );
   };
 
   delete: HTTPMethod = (url, options = {}) => {
-    return this.request(this.fullUrl(url), { ...options, method: METHODS.DELETE }, options.timeout);
+    return this.requestPromise(
+      this.request(this.fullUrl(url), { ...options, method: METHODS.DELETE })
+    );
   };
 
-  request = (url: string, options: any, timeout: number = 5000) => {
-    const { method, data, headers = {} } = options;
-    if (method === METHODS.GET) {
+  private request = (url: string, options: HttpOptionsType) => {
+    const {
+      method = METHODS.GET,
+      data,
+      headers = {},
+      timeout = 5000,
+      withCredentials = true,
+    } = options;
+    if (method === METHODS.GET && data) {
       url = queryStringify(url, data);
       console.log(url);
     }
@@ -65,15 +94,36 @@ export default class HTTPTransport {
       xhr.onerror = reject;
       xhr.ontimeout = reject;
 
+      if (withCredentials) {
+        xhr.withCredentials = true;
+      }
+
+      Object.keys(this._headers).forEach((key) => {
+        xhr.setRequestHeader(key, this._headers[key]);
+      });
+
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
 
       if (method === METHODS.GET || !data) {
+        console.log('ASDADSASDSDSDA');
         xhr.send();
       } else {
-        xhr.send(data);
+        xhr.send(JSON.stringify(data));
       }
     });
+  };
+
+  private requestPromise = async (promise: Promise<unknown>): Promise<HttpResponsePromiseType> => {
+    return promise
+      .then((res: XMLHttpRequest) => {
+        console.log('RES', res);
+        return { isError: res.status > 400, data: res.response };
+      })
+      .catch((e) => {
+        console.log('ERROR', e);
+        return { isError: true, data: e };
+      });
   };
 }

@@ -9,7 +9,7 @@ import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
 import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { profileFields, Routes } from '../../utils/constants';
 import { ProfileGoBackButton } from '../../components/profile/ProfileGoBackButton';
-import Router from '../../utils/Router';
+import Router from '../../services/Router/Router';
 import { ProfileAvatarButton } from '../../components/profile/ProfileAvatarButton';
 
 type PropsType = {
