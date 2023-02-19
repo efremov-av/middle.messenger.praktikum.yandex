@@ -119,7 +119,7 @@ export default class HTTPTransport {
     return promise
       .then((res: XMLHttpRequest) => {
         console.log('RES', res);
-        return { isError: res.status > 400, data: res.response };
+        return { isError: res.status >= 400, data: res.response };
       })
       .catch((e) => {
         console.log('ERROR', e);

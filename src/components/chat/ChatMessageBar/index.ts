@@ -16,7 +16,6 @@ export class ChatMessageBar extends Block<PropsType> {
 
   init() {
     const self = this;
-    console.log({ self });
     this.children.input = new ChatMessageInput({
       events: {
         focus: () => {

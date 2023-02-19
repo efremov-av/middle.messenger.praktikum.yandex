@@ -7,8 +7,15 @@ import { getData } from '../../../utils/utils';
 import { ChatMessages } from '../ChatMessages';
 import { validation } from '../../../utils/validation';
 import { TextboxValidation } from '../../textboxValidation';
+import Connect from '../../../services/Store/Connect';
+import { Modal } from '../../modal';
+import store from '../../../services/Store/store';
+import { ModalNewChatContent, modalNewChatContentProps } from '../ModalNewChatContent';
 
-type PropsType = {};
+type PropsType = {
+  modalNewChatVisible: boolean;
+  activeChat: IChat | null;
+};
 
 const messages = [
   {
@@ -30,7 +37,9 @@ export class Chat extends Block<PropsType> {
   }
 
   init() {
-    this.children.chatProfile = new ChatProfile({ title: 'Александр' });
+    this.children.chatProfile = new (Connect(ChatProfile, (state: any) => {
+      return { activeChat: state.activeChat ?? null };
+    }))({});
     this.children.chatMessageBar = new ChatMessageBar({
       validationMessage,
       events: {
@@ -50,12 +59,24 @@ export class Chat extends Block<PropsType> {
         },
       },
     });
-    this.children.chatMessages = new ChatMessages({
-      messages,
-    });
   }
 
   render(): DocumentFragment {
+    if (this.props.modalNewChatVisible) {
+      this.children.modalNewChat = new Modal({
+        title: 'Создание чата',
+        content: new ModalNewChatContent(modalNewChatContentProps),
+        onClose: () => {
+          console.log('CLOSE');
+          store.set('modalNewChatVisible', false);
+        },
+      });
+    }
+
+    this.children.chatMessages = new ChatMessages({
+      messages,
+    });
+
     return this.compile(tpl, {
       ...this.props,
     });

@@ -2,9 +2,14 @@ import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../common/Block';
 import { ChatsListItem } from '../ChatsListItem';
+import Button from '../../button';
+import ChatActions from '../../../actions/ChatActions';
+import store from '../../../services/Store/store';
 
 type PropsType = {
-  chats: any[];
+  chats: IChat[];
+  user: IUser;
+  activeChat: IChat | null;
 };
 
 export class ChatsList extends Block<PropsType> {
@@ -13,18 +18,32 @@ export class ChatsList extends Block<PropsType> {
   }
 
   init() {
-    this.children.chats = this.props.chats.map(
-      (c) =>
-        new ChatsListItem({
-          title: c.title,
-          message: c.message,
-          unreadedMessagesCount: c.unreadedMessagesCount,
-          avatarUrl: c.avatarUrl,
-        })
-    );
+    this.children.buttonNewChat = new Button({
+      text: 'Создать чат',
+      modificator: 'primary',
+      events: {
+        click: () => {
+          store.set('modalNewChatVisible', true);
+        },
+      },
+    });
   }
 
   render() {
+    this.children.chats = this.props.chats.map(
+      (c) =>
+        new ChatsListItem({
+          user: this.props.user,
+          data: c,
+          isActive: this.props.activeChat?.id === c.id,
+          events: {
+            click: () => {
+              ChatActions.setActiveChat(c);
+            },
+          },
+        })
+    );
+
     return this.compile(tpl, { ...this.props });
   }
 }

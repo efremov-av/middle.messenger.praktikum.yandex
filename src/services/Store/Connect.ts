@@ -1,15 +1,19 @@
 import Block from '../../components/common/Block';
-import store from './store';
+import store, { StoreEvents } from './store';
 
-interface BlockCounstuctor<P extends Record<string, any> = any> {
+export interface BlockCounstuctor<P extends Record<string, any> = any> {
   new (props: P): Block<P>;
 }
-const connect = (block: BlockCounstuctor, mapStateToProps: any) => {
+const Connect = (block: BlockCounstuctor, mapStateToProps: any): BlockCounstuctor => {
   return class extends block {
     constructor(props = {}) {
       super({ ...props, ...mapStateToProps(store.getState()) });
+
+      store.on(StoreEvents.Updated, () => {
+        this.setProps({ ...mapStateToProps(store.getState()) });
+      });
     }
   };
 };
 
-export default connect;
+export default Connect;

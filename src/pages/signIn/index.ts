@@ -8,7 +8,7 @@ import { validation } from '../../utils/validation';
 import { TextboxValidation } from '../../components/textboxValidation';
 import { TextboxLabel } from '../../components/textboxLabel';
 import { Routes } from '../../utils/constants';
-import AuthController from '../../controllers/AuthController';
+import AuthActions from '../../actions/AuthActions';
 import Router from '../../services/Router/Router';
 
 type PropsType = {
@@ -95,7 +95,7 @@ export const signInProps = {
   validationLogin,
   validationPassword,
   events: {
-    submit: async function (e: Event) {
+    submit: function (e: Event) {
       e.preventDefault();
       const data = getData(e.target);
 
@@ -105,24 +105,7 @@ export const signInProps = {
       validationResults.push(validation.password(validationPassword, data.password as string));
 
       if (!validationResults.some((r) => r === false)) {
-        const response = await AuthController.signIn(data.login as string, data.password as string);
-        if (!response.isError) {
-          const user = await AuthController.getUser();
-          console.log(user);
-          if (!user.isError) {
-            Router.go(Routes.Main);
-          } else {
-            alert('Unexpected error');
-          }
-        } else {
-          let errorText = '';
-          try {
-            errorText = JSON.parse(response.data).reason;
-          } catch {
-            errorText = 'Unexpected error';
-          }
-          alert(errorText);
-        }
+        AuthActions.signIn(data.login as string, data.password as string);
       } else {
         console.log('validation did not passed');
       }

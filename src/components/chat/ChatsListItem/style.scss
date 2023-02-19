@@ -1,15 +1,24 @@
 @import "./../../../variables.scss";
 
 .chats-list-item {
-  padding: 12px 0;
+  padding: 12px 10px;
   border-bottom: 1px solid $border-color;
   display: flex;
   flex-direction: row;
   font-size: 12px;
   position: relative;
+  cursor: pointer;
 
   &:last-child {
     border-bottom: none;
+  }
+
+  &:hover {
+    background-color: $bg-color-primary;
+  }
+
+  &_active {
+    background-color: $bg-color-primary;
   }
 
   &__avatar {
@@ -56,6 +65,7 @@
     position: absolute;
     top: 34px;
     right: 0;
+
     > div {
       background-color: $color-primary;
       color: #fff;

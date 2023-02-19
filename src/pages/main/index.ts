@@ -6,38 +6,28 @@ import { Chat } from '../../components/chat/Chat';
 import { ChatProfileLink } from '../../components/chat/ChatProfileLink';
 import { Routes } from '../../utils/constants';
 import Router from '../../services/Router/Router';
+import Connect from '../../services/Store/Connect';
+import ChatActions from '../../actions/ChatActions';
+import { ChatEmpty } from '../../components/chat/ChatEmpty';
 
-const chats = [
-  {
-    title: 'Один',
-    message: {
-      text: 'Привет!',
-      isYours: true,
-      date: 'Пн',
-    },
-    unreadedMessagesCount: 1,
-    avatarUrl: 'http://example',
-  },
-  {
-    title: 'Два',
-    message: {
-      text: 'Как дела?',
-      isYours: false,
-      date: 'Вт',
-    },
-    unreadedMessagesCount: 0,
-    avatarUrl: 'http://example',
-  },
-];
-export class MainPage extends Block {
-  constructor() {
-    super({});
+type PropsType = {
+  activeChat: IChat | null;
+};
+export class MainPage extends Block<PropsType> {
+  constructor(props: PropsType) {
+    super(props);
+
+    ChatActions.getChats();
   }
 
   init() {
-    this.children.chatsList = new ChatsList({ chats });
-
-    this.children.chat = new Chat({});
+    this.children.chatsList = new (Connect(ChatsList, (state: Record<string, any>) => {
+      return {
+        chats: state.chats ?? [],
+        user: state.user ?? {},
+        activeChat: state.activeChat ?? null,
+      };
+    }))({});
 
     this.children.chatProfileLink = new ChatProfileLink({
       events: {
@@ -49,6 +39,17 @@ export class MainPage extends Block {
   }
 
   render() {
+    if (this.props.activeChat) {
+      this.children.chat = new (Connect(Chat, (state: Record<string, any>) => {
+        return {
+          activeChat: state.activeChat ?? null,
+          modalNewChatVisible: state.modalNewChatVisible ?? false,
+        };
+      }))({});
+    } else {
+      this.children.chat = new ChatEmpty({});
+    }
+
     return this.compile(tpl, {});
   }
 }

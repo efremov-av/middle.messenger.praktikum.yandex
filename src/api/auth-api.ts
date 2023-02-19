@@ -22,6 +22,9 @@ class AuthAPI extends BaseAPI {
       data: payload,
     }) as Promise<HttpResponsePromiseType>;
   }
+  logout() {
+    return instance.post('/logout') as Promise<HttpResponsePromiseType>;
+  }
   getUser() {
     return instance.get('/user') as Promise<HttpResponsePromiseType>;
   }

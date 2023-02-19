@@ -9,7 +9,7 @@ import { validation } from '../../utils/validation';
 import { TextboxLabel } from '../../components/textboxLabel';
 import { Routes } from '../../utils/constants';
 import Router from '../../services/Router/Router';
-import AuthController from '../../controllers/AuthController';
+import AuthActions from '../../actions/AuthActions';
 
 type PropsType = {
   submit: Block;
@@ -224,7 +224,7 @@ export const signUpProps = {
 
       if (!validationResults.some((r) => r === false)) {
         console.log('API request payload', data);
-        const response = await AuthController.signUp({
+        const response = await AuthActions.signUp({
           first_name: data.first_name as string,
           second_name: data.second_name as string,
           login: data.login as string,

@@ -96,7 +96,11 @@ class Block<P extends Record<string, any> = any> {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    const { children, props } = this._getChildren(nextProps);
+
+    if (Object.values(children).length) Object.assign(this.children, children);
+
+    if (Object.values(props).length) Object.assign(this.props, props);
   };
 
   get element() {

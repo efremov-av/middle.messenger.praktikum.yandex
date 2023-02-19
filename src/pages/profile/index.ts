@@ -7,18 +7,12 @@ import { ProfileAvatarEdit } from '../../components/profile/profileAvatarEdit';
 import { validation } from '../../utils/validation';
 import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
 import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
-import { profileFields, Routes } from '../../utils/constants';
+import { Routes } from '../../utils/constants';
 import { ProfileGoBackButton } from '../../components/profile/ProfileGoBackButton';
 import Router from '../../services/Router/Router';
 import { ProfileAvatarButton } from '../../components/profile/ProfileAvatarButton';
 
 type PropsType = {
-  fieldLogin: Block;
-  fieldFirstName: Block;
-  fieldSecondName: Block;
-  fieldEmail: Block;
-  fieldPhone: Block;
-  fieldDisplayName: Block;
   labelLogin: Block;
   labelFirstName: Block;
   labelSecondName: Block;
@@ -34,110 +28,9 @@ type PropsType = {
   buttonEdit: Block;
   buttonPassword: Block;
   isAvatarEdit: boolean;
+  user: IUser | null;
 };
 
-const fieldLogin = new ProfileFieldInput({
-  name: 'login',
-  placeholder: 'Введите логин',
-  type: 'text',
-  value: profileFields.find((f) => f.name === 'login')?.value,
-  isDisabled: true,
-  events: {
-    focus: () => {
-      validationLogin.setProps({ text: null });
-    },
-
-    blur: (event: Event) => {
-      const { value } = event.target as HTMLInputElement;
-      validation.login(validationLogin, value as string);
-    },
-  },
-});
-const fieldFirstName = new ProfileFieldInput({
-  name: 'first_name',
-  placeholder: 'Введите имя',
-  type: 'text',
-  value: profileFields.find((f) => f.name === 'first_name')?.value,
-  isDisabled: true,
-  events: {
-    focus: () => {
-      validationFirstName.setProps({ text: null });
-    },
-
-    blur: (event: Event) => {
-      const { value } = event.target as HTMLInputElement;
-      validation.name(validationFirstName, value as string);
-    },
-  },
-});
-const fieldSecondName = new ProfileFieldInput({
-  name: 'second_name',
-  placeholder: 'Введите фамилию',
-  type: 'text',
-  value: profileFields.find((f) => f.name === 'second_name')?.value,
-  isDisabled: true,
-  events: {
-    focus: () => {
-      validationSecondName.setProps({ text: null });
-    },
-
-    blur: (event: Event) => {
-      const { value } = event.target as HTMLInputElement;
-      validation.name(validationSecondName, value as string);
-    },
-  },
-});
-const fieldEmail = new ProfileFieldInput({
-  name: 'email',
-  placeholder: 'Введите email',
-  type: 'text',
-  value: profileFields.find((f) => f.name === 'email')?.value,
-  isDisabled: true,
-  events: {
-    focus: () => {
-      validationEmail.setProps({ text: null });
-    },
-
-    blur: (event: Event) => {
-      const { value } = event.target as HTMLInputElement;
-      validation.email(validationEmail, value as string);
-    },
-  },
-});
-const fieldPhone = new ProfileFieldInput({
-  name: 'phone',
-  placeholder: 'Введите телефон',
-  type: 'text',
-  value: profileFields.find((f) => f.name === 'phone')?.value,
-  isDisabled: true,
-  events: {
-    focus: () => {
-      validationPhone.setProps({ text: null });
-    },
-
-    blur: (event: Event) => {
-      const { value } = event.target as HTMLInputElement;
-      validation.phone(validationPhone, value as string);
-    },
-  },
-});
-const fieldDisplayName = new ProfileFieldInput({
-  name: 'display_name',
-  placeholder: 'Введите имя в чате',
-  type: 'text',
-  value: profileFields.find((f) => f.name === 'display_name')?.value,
-  isDisabled: true,
-  events: {
-    focus: () => {
-      validationDisplayName.setProps({ text: null });
-    },
-
-    blur: (event: Event) => {
-      const { value } = event.target as HTMLInputElement;
-      validation.name(validationDisplayName, value as string);
-    },
-  },
-});
 const labelLogin = new ProfileFieldLabel({ label: 'Логин' });
 const labelFirstName = new ProfileFieldLabel({ label: 'Имя' });
 const labelSecondName = new ProfileFieldLabel({ label: 'Фамилия' });
@@ -198,6 +91,109 @@ export class ProfilePage extends Block<PropsType> {
     if (this.props.isAvatarEdit) {
       this.children.profileAvatarEdit = new ProfileAvatarEdit();
     }
+
+    this.children.fieldLogin = new ProfileFieldInput({
+      name: 'login',
+      placeholder: 'Введите логин',
+      type: 'text',
+      value: this.props.user?.login,
+      isDisabled: true,
+      events: {
+        focus: () => {
+          validationLogin.setProps({ text: null });
+        },
+
+        blur: (event: Event) => {
+          const { value } = event.target as HTMLInputElement;
+          validation.login(validationLogin, value as string);
+        },
+      },
+    });
+    this.children.fieldFirstName = new ProfileFieldInput({
+      name: 'first_name',
+      placeholder: 'Введите имя',
+      type: 'text',
+      value: this.props.user?.first_name,
+      isDisabled: true,
+      events: {
+        focus: () => {
+          validationFirstName.setProps({ text: null });
+        },
+
+        blur: (event: Event) => {
+          const { value } = event.target as HTMLInputElement;
+          validation.name(validationFirstName, value as string);
+        },
+      },
+    });
+    this.children.fieldSecondName = new ProfileFieldInput({
+      name: 'second_name',
+      placeholder: 'Введите фамилию',
+      type: 'text',
+      value: this.props.user?.second_name,
+      isDisabled: true,
+      events: {
+        focus: () => {
+          validationSecondName.setProps({ text: null });
+        },
+
+        blur: (event: Event) => {
+          const { value } = event.target as HTMLInputElement;
+          validation.name(validationSecondName, value as string);
+        },
+      },
+    });
+    this.children.fieldEmail = new ProfileFieldInput({
+      name: 'email',
+      placeholder: 'Введите email',
+      type: 'text',
+      value: this.props.user?.email,
+      isDisabled: true,
+      events: {
+        focus: () => {
+          validationEmail.setProps({ text: null });
+        },
+
+        blur: (event: Event) => {
+          const { value } = event.target as HTMLInputElement;
+          validation.email(validationEmail, value as string);
+        },
+      },
+    });
+    this.children.fieldPhone = new ProfileFieldInput({
+      name: 'phone',
+      placeholder: 'Введите телефон',
+      type: 'text',
+      value: this.props.user?.phone,
+      isDisabled: true,
+      events: {
+        focus: () => {
+          validationPhone.setProps({ text: null });
+        },
+
+        blur: (event: Event) => {
+          const { value } = event.target as HTMLInputElement;
+          validation.phone(validationPhone, value as string);
+        },
+      },
+    });
+    this.children.fieldDisplayName = new ProfileFieldInput({
+      name: 'display_name',
+      placeholder: 'Введите имя в чате',
+      type: 'text',
+      value: this.props.user?.display_name ?? undefined,
+      isDisabled: true,
+      events: {
+        focus: () => {
+          validationDisplayName.setProps({ text: null });
+        },
+
+        blur: (event: Event) => {
+          const { value } = event.target as HTMLInputElement;
+          validation.name(validationDisplayName, value as string);
+        },
+      },
+    });
   }
 
   render() {
@@ -206,12 +202,6 @@ export class ProfilePage extends Block<PropsType> {
 }
 
 export const profilePageProps = {
-  fieldEmail,
-  fieldFirstName,
-  fieldLogin,
-  fieldDisplayName,
-  fieldPhone,
-  fieldSecondName,
   labelEmail,
   labelFirstName,
   labelLogin,
@@ -232,12 +222,6 @@ export const profilePageProps = {
 };
 
 export const profileAvatarPageProps = {
-  fieldEmail,
-  fieldFirstName,
-  fieldLogin,
-  fieldDisplayName,
-  fieldPhone,
-  fieldSecondName,
   labelEmail,
   labelFirstName,
   labelLogin,

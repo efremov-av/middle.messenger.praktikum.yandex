@@ -1,6 +1,21 @@
-import HTTPTransport from '../utils/HTTPTransport';
+import { baseUrl, defaultHeaders } from '../utils/constants';
+import HTTPTransport, { HttpResponsePromiseType } from '../utils/HTTPTransport';
 import { BaseAPI } from './base-api';
 
-const chatAPIInstance = new HTTPTransport('api/v2/chats');
+const instance = new HTTPTransport(`${baseUrl}/chats`, defaultHeaders);
 
-class ChatAPI extends BaseAPI {}
+class ChatAPI extends BaseAPI {
+  getChats() {
+    return instance.get('') as Promise<HttpResponsePromiseType>;
+  }
+
+  createChat(title: string) {
+    return instance.post('', { data: { title } }) as Promise<HttpResponsePromiseType>;
+  }
+
+  deleteChat(chatId: number) {
+    return instance.delete('', { data: { chatId } });
+  }
+}
+
+export default new ChatAPI();

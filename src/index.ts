@@ -9,14 +9,32 @@ import { StatusPage, statusPage404Props, statusPage500Props } from './pages/stat
 import { pageListProps, PagesList } from './pages/pagesList';
 import Router from './services/Router/Router';
 import { Routes } from './utils/constants';
+import Connect from './services/Store/Connect';
 
 window.addEventListener('DOMContentLoaded', () => {
   Router.use(Routes.Index, PagesList, pageListProps);
-  Router.use(Routes.Main, MainPage);
+  Router.use(
+    Routes.Main,
+    Connect(MainPage, (state: Record<string, any>) => {
+      return { activeChat: state.activeChat ?? null };
+    })
+  );
   Router.use(Routes.SignIn, SignIn, signInProps);
   Router.use(Routes.SignUp, SignUp, signUpProps);
-  Router.use(Routes.Profile, ProfilePage, profilePageProps);
-  Router.use(Routes.ProfileEdit, ProfileEditPage, profileEditPageProps);
+  Router.use(
+    Routes.Profile,
+    Connect(ProfilePage, (state: Record<string, any>) => {
+      return { user: state.user ?? null };
+    }),
+    profilePageProps
+  );
+  Router.use(
+    Routes.ProfileEdit,
+    Connect(ProfileEditPage, (state: Record<string, any>) => {
+      return { user: state.user ?? null };
+    }),
+    profileEditPageProps
+  );
   Router.use(Routes.ProfilePassword, ProfilePassword, profilePasswordProps);
   Router.use(Routes.ProfileAvatar, ProfilePage, profileAvatarPageProps);
   Router.use(Routes.Page500, StatusPage, statusPage500Props);
