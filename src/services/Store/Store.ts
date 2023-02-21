@@ -20,7 +20,7 @@ class Store extends EventBus {
 
     super();
 
-    const savedState = localStorage.getItem(Store.STORE_NAME);
+    const savedState = undefined; // localStorage.getItem(Store.STORE_NAME);
 
     this.state = savedState ? JSON.parse(savedState) ?? {} : {};
 

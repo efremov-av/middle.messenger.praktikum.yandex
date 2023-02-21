@@ -8,7 +8,7 @@ import { Routes } from '../../utils/constants';
 import Router from '../../services/Router/Router';
 import Connect from '../../services/Store/Connect';
 import ChatActions from '../../actions/ChatActions';
-import { ChatEmpty } from '../../components/chat/ChatEmpty';
+// import { ChatEmpty } from '../../components/chat/ChatEmpty';
 import AuthActions from '../../actions/AuthActions';
 
 type PropsType = {
@@ -20,6 +20,8 @@ export class MainPage extends Block<PropsType> {
 
     AuthActions.getUser();
     ChatActions.getChats();
+    ChatActions.setMessages(undefined);
+    ChatActions.setActiveChat(null);
   }
 
   init() {
@@ -38,22 +40,20 @@ export class MainPage extends Block<PropsType> {
         },
       },
     });
+
+    this.children.chat = new (Connect(Chat, (state: Record<string, any>) => {
+      return {
+        activeChat: state.activeChat ?? null,
+        modalNewChatVisible: state.modalNewChatVisible ?? false,
+        modalAddUserVisible: state.modalAddUserVisible ?? false,
+        modalDeleteUserVisible: state.modalDeleteUserVisible ?? false,
+        user: state.user ?? null,
+        token: state.token ?? null,
+      };
+    }))({});
   }
 
   render() {
-    if (this.props.activeChat) {
-      this.children.chat = new (Connect(Chat, (state: Record<string, any>) => {
-        return {
-          activeChat: state.activeChat ?? null,
-          modalNewChatVisible: state.modalNewChatVisible ?? false,
-          modalAddUserVisible: state.modalAddUserVisible ?? false,
-          modalDeleteUserVisible: state.modalDeleteUserVisible ?? false,
-        };
-      }))({});
-    } else {
-      this.children.chat = new ChatEmpty({});
-    }
-
     return this.compile(tpl, {});
   }
 }

@@ -9,7 +9,6 @@
     max-width: 420px;
     background-color: $bg-color-message;
     border-radius: 0 15px 15px 15px;
-    border: 1px solid $border-color-message;
   }
 
   &__text {
@@ -29,7 +28,6 @@
 
     .chat-message__container {
       background-color: $bg-color-message-my;
-      border: 1px solid $border-color-message-my;
       border-radius: 15px 0 15px 15px;
     }
 

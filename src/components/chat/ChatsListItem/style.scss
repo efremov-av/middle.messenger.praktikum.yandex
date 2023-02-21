@@ -56,7 +56,7 @@
   &__date {
     position: absolute;
     top: 12px;
-    right: 0;
+    right: 10px;
     color: $font-color-1;
     font-size: 10px;
   }
@@ -64,7 +64,7 @@
   &__unread {
     position: absolute;
     top: 34px;
-    right: 0;
+    right: 10px;
 
     > div {
       background-color: $color-primary;

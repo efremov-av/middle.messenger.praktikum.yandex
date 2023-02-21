@@ -15,7 +15,7 @@ class AuthActions {
         store.set('user', JSON.parse(user.data));
         Router.go(Routes.Main);
       } else {
-        alert('Unexpected error');
+        console.log('Unexpected error');
       }
     } else {
       alert(getErrorMessage(response.data));
@@ -39,7 +39,7 @@ class AuthActions {
       store.set('user', JSON.parse(user.data));
       return user.data;
     } else {
-      alert('Unexpected error');
+      console.log('Unexpected error');
       return null;
     }
   }

@@ -8,7 +8,7 @@ class ChatActions {
       store.set('chats', JSON.parse(chats.data));
       return chats.data;
     } else {
-      alert('Unexpected error');
+      console.log('Unexpected error');
       return null;
     }
   }
@@ -36,11 +36,36 @@ class ChatActions {
     return response;
   }
 
-  public setActiveChat(chat: IChat | null) {
-    if ((store.getState().activeChat as IChat | null)?.id !== chat?.id) {
+  public async setActiveChat(chat: IChat | null) {
+    console.log('setActiveChat');
+    if (chat && (store.getState().activeChat as IChat | null)?.id !== chat?.id) {
       store.set('activeChat', chat);
+      const response = await ChatAPI.getToken(chat.id);
+      store.set('token', JSON.parse(response.data).token);
+      this.setMessages(undefined);
     } else {
       store.set('activeChat', null);
+      store.set('token', null);
+      this.setMessages(undefined);
+    }
+  }
+
+  public setMessages(messages: IMessage[] | undefined) {
+    store.set('messages', messages);
+  }
+
+  public addMessages(newMessages: IMessage[], side: 'start' | 'end') {
+    let messages = store.getState().messages as IMessage[] | undefined;
+
+    if (messages) {
+      if (side === 'end') {
+        messages = messages.concat(newMessages);
+      } else {
+        messages = newMessages.concat(messages);
+      }
+      store.set('messages', messages);
+    } else {
+      store.set('messages', newMessages);
     }
   }
 }

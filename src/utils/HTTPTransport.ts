@@ -69,13 +69,7 @@ export default class HTTPTransport {
   };
 
   private request = (url: string, options: HttpOptionsType) => {
-    const {
-      method = METHODS.GET,
-      data,
-      headers = {},
-      timeout = 5000,
-      withCredentials = true,
-    } = options;
+    const { method = METHODS.GET, data, headers, timeout = 5000, withCredentials = true } = options;
     if (method === METHODS.GET && data) {
       url = queryStringify(url, data);
       console.log(url);
@@ -102,11 +96,11 @@ export default class HTTPTransport {
         Object.keys(this._headers).forEach((key) => {
           xhr.setRequestHeader(key, this._headers[key]);
         });
+      } else {
+        Object.keys(headers).forEach((key) => {
+          xhr.setRequestHeader(key, headers[key]);
+        });
       }
-
-      Object.keys(headers).forEach((key) => {
-        xhr.setRequestHeader(key, headers[key]);
-      });
 
       if (method === METHODS.GET || !data) {
         xhr.send();

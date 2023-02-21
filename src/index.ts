@@ -13,12 +13,7 @@ import Connect from './services/Store/Connect';
 
 window.addEventListener('DOMContentLoaded', () => {
   Router.use(Routes.Index, PagesList, pageListProps);
-  Router.use(
-    Routes.Main,
-    Connect(MainPage, (state: Record<string, any>) => {
-      return { activeChat: state.activeChat ?? null };
-    })
-  );
+  Router.use(Routes.Main, MainPage);
   Router.use(Routes.SignIn, SignIn, signInProps);
   Router.use(Routes.SignUp, SignUp, signUpProps);
   Router.use(

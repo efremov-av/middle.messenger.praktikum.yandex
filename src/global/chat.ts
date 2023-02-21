@@ -9,3 +9,14 @@ interface IChat {
     content: string;
   } | null;
 }
+
+interface IMessage {
+  content: string | null;
+  type: string;
+  time: string;
+  file: File | null;
+  chat_id: number;
+  is_read: boolean;
+  user_id: number;
+  id: number;
+}

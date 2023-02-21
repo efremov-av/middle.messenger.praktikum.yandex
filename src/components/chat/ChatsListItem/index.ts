@@ -16,20 +16,30 @@ export class ChatsListItem extends Block<PropsType> {
 
   render(): DocumentFragment {
     const isYours = this.props.data.last_message?.user.login === this.props.user.login;
-    let message = null;
+    let content = null;
     if (this.props.data.last_message) {
-      message = {
-        isYours,
-        time: this.props.data.last_message?.time,
-        content: `${isYours ? '<span>Вы:</span>' : ''} ${this.props.data.last_message?.content}`,
-      };
+      content = `${isYours ? '<span>Вы:</span>' : ''} ${this.props.data.last_message?.content}`;
+    }
+
+    let time = '';
+    if (this.props.data.last_message) {
+      const date = new Date(this.props.data.last_message.time);
+      if (date.toDateString() !== new Date().toDateString()) {
+        time = new Date(this.props.data.last_message.time).toLocaleDateString('ru-RU');
+      } else {
+        time = new Date(this.props.data.last_message.time).toLocaleTimeString('ru-RU');
+      }
     }
 
     return this.compile(tpl, {
+      last_message: {
+        ...this.props.data.last_message,
+        time,
+      },
       id: this.props.data.id,
       activeClass: this.props.isActive ? 'chats-list-item_active' : '',
       title: this.props.data.title,
-      message,
+      content,
       unread_count: this.props.data.unread_count
         ? `<div>${this.props.data.unread_count}</div>`
         : '',

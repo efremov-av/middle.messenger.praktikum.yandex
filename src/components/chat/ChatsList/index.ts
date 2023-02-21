@@ -37,8 +37,8 @@ export class ChatsList extends Block<PropsType> {
           data: c,
           isActive: this.props.activeChat?.id === c.id,
           events: {
-            click: () => {
-              ChatActions.setActiveChat(c);
+            click: async () => {
+              await ChatActions.setActiveChat(c);
             },
           },
         })
