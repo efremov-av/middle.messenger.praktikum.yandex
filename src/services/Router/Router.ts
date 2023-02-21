@@ -1,4 +1,6 @@
+import AuthActions from '../../actions/AuthActions';
 import Block from '../../components/common/Block';
+import { Routes } from '../../utils/constants';
 
 interface BlockCounstuctor<P extends Record<string, any> = any> {
   new (props: P): Block<P>;
@@ -83,9 +85,21 @@ export class Router {
     this.history.forward();
   }
 
-  public start() {
-    window.onpopstate = (event: PopStateEvent) => {
+  private async checkAuth() {
+    const user = await AuthActions.getUser();
+    console.log({ user });
+    if (!user) {
+      this.go(Routes.SignIn);
+    }
+  }
+
+  public async start() {
+    this.checkAuth();
+
+    window.onpopstate = async (event: PopStateEvent) => {
       const target = event.currentTarget as Window;
+
+      this.checkAuth();
 
       this._onRoute(target.location.pathname);
     };

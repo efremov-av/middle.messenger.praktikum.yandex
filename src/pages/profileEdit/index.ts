@@ -3,13 +3,14 @@ import './../profile/style.scss';
 import './style.scss';
 import Block from '../../components/common/Block';
 import Button from '../../components/button';
-import { getData } from '../../utils/utils';
+import { getData, getErrorMessage } from '../../utils/utils';
 import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
 import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { validation } from '../../utils/validation';
 import { Routes } from '../../utils/constants';
 import Router from '../../services/Router/Router';
 import { ProfileFieldInput } from '../../components/profile/profileFieldInput';
+import UserActions from '../../actions/UserActions';
 
 type PropsType = {
   labelLogin: Block;
@@ -177,7 +178,7 @@ export const profileEditPageProps = {
   validationSecondName,
   buttonSave,
   events: {
-    submit: (e: Event) => {
+    submit: async (e: Event) => {
       e.preventDefault();
       const data = getData(e.target);
 
@@ -192,7 +193,12 @@ export const profileEditPageProps = {
 
       if (!validationResults.some((r) => r === false)) {
         console.log('API request payload', data);
-        Router.go(Routes.Profile);
+        const response = await UserActions.updateUserProfile(data);
+        if (!response.isError) {
+          Router.go(Routes.Profile);
+        } else {
+          alert(getErrorMessage(response.data));
+        }
       } else {
         console.log('validation did not passed');
       }

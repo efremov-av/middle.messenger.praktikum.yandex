@@ -9,6 +9,7 @@ import Router from '../../services/Router/Router';
 import Connect from '../../services/Store/Connect';
 import ChatActions from '../../actions/ChatActions';
 import { ChatEmpty } from '../../components/chat/ChatEmpty';
+import AuthActions from '../../actions/AuthActions';
 
 type PropsType = {
   activeChat: IChat | null;
@@ -17,6 +18,7 @@ export class MainPage extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
 
+    AuthActions.getUser();
     ChatActions.getChats();
   }
 
@@ -44,6 +46,8 @@ export class MainPage extends Block<PropsType> {
         return {
           activeChat: state.activeChat ?? null,
           modalNewChatVisible: state.modalNewChatVisible ?? false,
+          modalAddUserVisible: state.modalAddUserVisible ?? false,
+          modalDeleteUserVisible: state.modalDeleteUserVisible ?? false,
         };
       }))({});
     } else {

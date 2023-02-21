@@ -7,7 +7,7 @@ const METHODS = {
 
 export type HttpOptionsType = {
   method?: string;
-  data?: Record<string, unknown>;
+  data?: Record<string, unknown> | FormData;
   headers?: Record<string, string>;
   timeout?: number;
   withCredentials?: boolean;
@@ -98,19 +98,25 @@ export default class HTTPTransport {
         xhr.withCredentials = true;
       }
 
-      Object.keys(this._headers).forEach((key) => {
-        xhr.setRequestHeader(key, this._headers[key]);
-      });
+      if (!headers) {
+        Object.keys(this._headers).forEach((key) => {
+          xhr.setRequestHeader(key, this._headers[key]);
+        });
+      }
 
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
 
       if (method === METHODS.GET || !data) {
-        console.log('ASDADSASDSDSDA');
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        if (data instanceof FormData) {
+          console.log('FILE', data.get('avatar'));
+          xhr.send(data);
+        } else {
+          xhr.send(JSON.stringify(data));
+        }
       }
     });
   };
@@ -118,7 +124,6 @@ export default class HTTPTransport {
   private requestPromise = async (promise: Promise<unknown>): Promise<HttpResponsePromiseType> => {
     return promise
       .then((res: XMLHttpRequest) => {
-        console.log('RES', res);
         return { isError: res.status >= 400, data: res.response };
       })
       .catch((e) => {

@@ -100,3 +100,4 @@ export enum Routes {
 
 export const baseUrl = 'https://ya-praktikum.tech/api/v2';
 export const defaultHeaders = { 'Content-Type': 'application/json' };
+export const imageHostUrl = 'https://ya-praktikum.tech/api/v2/resources/';

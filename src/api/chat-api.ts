@@ -14,7 +14,19 @@ class ChatAPI extends BaseAPI {
   }
 
   deleteChat(chatId: number) {
-    return instance.delete('', { data: { chatId } });
+    return instance.delete('', { data: { chatId } }) as Promise<HttpResponsePromiseType>;
+  }
+
+  addUser(chatId: number, userId: number) {
+    return instance.put('/users', {
+      data: { chatId, users: [userId] },
+    }) as Promise<HttpResponsePromiseType>;
+  }
+
+  deleteUser(chatId: number, userId: number) {
+    return instance.delete('/users', {
+      data: { chatId, users: [userId] },
+    }) as Promise<HttpResponsePromiseType>;
   }
 }
 

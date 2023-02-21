@@ -7,10 +7,13 @@ import { ProfileAvatarEdit } from '../../components/profile/profileAvatarEdit';
 import { validation } from '../../utils/validation';
 import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
 import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
-import { Routes } from '../../utils/constants';
+import { imageHostUrl, Routes } from '../../utils/constants';
 import { ProfileGoBackButton } from '../../components/profile/ProfileGoBackButton';
 import Router from '../../services/Router/Router';
 import { ProfileAvatarButton } from '../../components/profile/ProfileAvatarButton';
+import AuthActions from '../../actions/AuthActions';
+import { getData, getErrorMessage } from '../../utils/utils';
+import UserActions from '../../actions/UserActions';
 
 type PropsType = {
   labelLogin: Block;
@@ -27,8 +30,11 @@ type PropsType = {
   validationDisplayName: Block;
   buttonEdit: Block;
   buttonPassword: Block;
+  buttonLogout: Block;
   isAvatarEdit: boolean;
-  user: IUser | null;
+  profileAvatarButton: Block;
+  goBackButton: Block;
+  user?: IUser | null;
 };
 
 const labelLogin = new ProfileFieldLabel({ label: 'Логин' });
@@ -66,6 +72,17 @@ const buttonPassword = new ProfileButton({
   },
 });
 
+const buttonLogout = new ProfileButton({
+  text: 'Выйти',
+  type: 'link',
+  style: 'danger',
+  events: {
+    click: () => {
+      AuthActions.logout();
+    },
+  },
+});
+
 const goBackButton = new ProfileGoBackButton({
   events: {
     click: () => {
@@ -89,7 +106,25 @@ export class ProfilePage extends Block<PropsType> {
 
   init() {
     if (this.props.isAvatarEdit) {
-      this.children.profileAvatarEdit = new ProfileAvatarEdit();
+      this.children.profileAvatarEdit = new ProfileAvatarEdit({
+        events: {
+          submit: async (e: Event) => {
+            e.preventDefault();
+            const data = getData(e.target);
+            console.log({ data });
+
+            if (data.avatar) {
+              const response = await UserActions.changeAvatar(data.avatar as File);
+              console.log({ response });
+              if (!response.isError) {
+                Router.go(Routes.Profile);
+              } else {
+                alert(getErrorMessage(response.data));
+              }
+            }
+          },
+        },
+      });
     }
 
     this.children.fieldLogin = new ProfileFieldInput({
@@ -197,11 +232,14 @@ export class ProfilePage extends Block<PropsType> {
   }
 
   render() {
-    return this.compile(tpl, { ...this.props });
+    return this.compile(tpl, {
+      ...this.props,
+      avatarUrl: this.props.user?.avatar ? `${imageHostUrl}${this.props.user?.avatar}` : '',
+    });
   }
 }
 
-export const profilePageProps = {
+export const profilePageProps: PropsType = {
   labelEmail,
   labelFirstName,
   labelLogin,
@@ -216,12 +254,13 @@ export const profilePageProps = {
   validationSecondName,
   buttonEdit,
   buttonPassword,
+  buttonLogout,
   goBackButton,
   profileAvatarButton,
   isAvatarEdit: false,
 };
 
-export const profileAvatarPageProps = {
+export const profileAvatarPageProps: PropsType = {
   labelEmail,
   labelFirstName,
   labelLogin,
@@ -236,6 +275,7 @@ export const profileAvatarPageProps = {
   validationSecondName,
   buttonEdit,
   buttonPassword,
+  buttonLogout,
   goBackButton,
   profileAvatarButton,
   isAvatarEdit: true,

@@ -3,20 +3,19 @@ import './style.scss';
 import Button from '../../button';
 import Block from '../../common/Block';
 
-export class ProfileAvatarEdit extends Block {
-  constructor() {
-    super({});
+type PropsType = {
+  events: ComponentEvent;
+};
+export class ProfileAvatarEdit extends Block<PropsType> {
+  constructor(props: PropsType) {
+    super(props);
   }
 
   init() {
     this.children.buttonAvatarUpload = new Button({
       text: 'Поменять',
       modificator: 'primary',
-      events: {
-        click: () => {
-          window.location.href = '/profile';
-        },
-      },
+      type: 'submit',
     });
   }
 

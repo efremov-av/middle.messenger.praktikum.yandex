@@ -3,7 +3,7 @@ import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
 import { TextboxInput } from '../../components/textboxInput';
-import { getData } from '../../utils/utils';
+import { getData, getErrorMessage } from '../../utils/utils';
 import { TextboxValidation } from '../../components/textboxValidation';
 import { validation } from '../../utils/validation';
 import { TextboxLabel } from '../../components/textboxLabel';
@@ -236,13 +236,7 @@ export const signUpProps = {
           alert('Вы успешно зарегистрировались!');
           Router.go(Routes.SignIn);
         } else {
-          let errorText = '';
-          try {
-            errorText = JSON.parse(response.data).reason;
-          } catch {
-            errorText = 'Unexpected error';
-          }
-          alert(errorText);
+          alert(getErrorMessage(response.data));
         }
       } else {
         console.log('validation did not passed');

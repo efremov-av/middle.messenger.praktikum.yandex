@@ -4,12 +4,13 @@ import './style.scss';
 import Block from '../../components/common/Block';
 import Button from '../../components/button';
 import { ProfileFieldInput } from '../../components/profile/profileFieldInput';
-import { getData } from '../../utils/utils';
+import { getData, getErrorMessage } from '../../utils/utils';
 import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
 import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { validation } from '../../utils/validation';
 import Router from '../../services/Router/Router';
 import { Routes } from '../../utils/constants';
+import UserActions from '../../actions/UserActions';
 
 type PropsType = {
   fieldOldPassword: Block;
@@ -104,7 +105,7 @@ export const profilePasswordProps = {
   validationRepeatNewPassword,
   buttonSave,
   events: {
-    submit: (e: Event) => {
+    submit: async (e: Event) => {
       e.preventDefault();
       const data = getData(e.target);
 
@@ -125,8 +126,15 @@ export const profilePasswordProps = {
       );
 
       if (!validationResults.some((r) => r === false)) {
-        console.log('API request payload', data);
-        Router.go(Routes.Profile);
+        const response = await UserActions.changePassword(
+          data.oldPassword as string,
+          data.newPassword as string
+        );
+        if (!response.isError) {
+          Router.go(Routes.Profile);
+        } else {
+          alert(getErrorMessage(response.data));
+        }
       } else {
         console.log('validation did not passed');
       }

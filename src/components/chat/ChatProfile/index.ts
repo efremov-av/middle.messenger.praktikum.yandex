@@ -13,11 +13,12 @@ export class ChatProfile extends Block<PropsType> {
   }
 
   protected init(): void {
-    this.children.menu = new ChatProfileMenu({});
+    this.children.menu = new ChatProfileMenu({ activeChat: this.props.activeChat });
   }
 
   render(): DocumentFragment {
     return this.compile(tpl, {
+      imgUrl: this.props.activeChat?.avatar,
       title: this.props.activeChat?.title,
     });
   }

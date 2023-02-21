@@ -18,6 +18,24 @@ class ChatActions {
     this.getChats();
   }
 
+  public async deleteChat(chatId: number) {
+    await ChatAPI.deleteChat(chatId);
+    this.getChats();
+    this.setActiveChat(null);
+  }
+
+  public async addUser(chatId: number, userId: number) {
+    const response = await ChatAPI.addUser(chatId, userId);
+    this.getChats();
+    return response;
+  }
+
+  public async deleteUser(chatId: number, userId: number) {
+    const response = await ChatAPI.deleteUser(chatId, userId);
+    this.getChats();
+    return response;
+  }
+
   public setActiveChat(chat: IChat | null) {
     if ((store.getState().activeChat as IChat | null)?.id !== chat?.id) {
       store.set('activeChat', chat);

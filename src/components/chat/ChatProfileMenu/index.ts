@@ -2,8 +2,12 @@ import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../common/Block';
 import Button from '../../button';
+import ChatActions from '../../../actions/ChatActions';
+import store from '../../../services/Store/store';
 
-type PropsType = {};
+type PropsType = {
+  activeChat: IChat | null;
+};
 
 export class ChatProfileMenu extends Block<PropsType> {
   constructor(props: PropsType) {
@@ -17,18 +21,31 @@ export class ChatProfileMenu extends Block<PropsType> {
       modificator: 'primary',
       events: {
         click: () => {
-          console.log('asd');
+          store.set('modalAddUserVisible', true);
+        },
+      },
+    });
+
+    this.children.buttonDeleteUser = new Button({
+      text: 'Удалить пользователя',
+      type: 'button',
+      modificator: 'default',
+      events: {
+        click: async () => {
+          store.set('modalDeleteUserVisible', true);
         },
       },
     });
 
     this.children.buttonLogout = new Button({
-      text: 'УДалить пользователя',
+      text: 'Удалить чат',
       type: 'button',
-      modificator: 'primary',
+      modificator: 'default',
       events: {
         click: async () => {
-          console.log('asd');
+          if (this.props.activeChat) {
+            ChatActions.deleteChat(this.props.activeChat.id);
+          }
         },
       },
     });

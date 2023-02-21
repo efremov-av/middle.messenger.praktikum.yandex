@@ -2,6 +2,7 @@ import AuthAPI from '../api/auth-api';
 import Router from '../services/Router/Router';
 import store from '../services/Store/store';
 import { Routes } from '../utils/constants';
+import { getErrorMessage } from '../utils/utils';
 
 class AuthActions {
   public async signIn(login: string, password: string) {
@@ -17,13 +18,7 @@ class AuthActions {
         alert('Unexpected error');
       }
     } else {
-      let errorText = '';
-      try {
-        errorText = JSON.parse(response.data).reason;
-      } catch {
-        errorText = 'Unexpected error';
-      }
-      alert(errorText);
+      alert(getErrorMessage(response.data));
     }
   }
 
@@ -39,18 +34,13 @@ class AuthActions {
   }
 
   public async getUser() {
-    const currentUser = store.getState()['user'];
-    if (currentUser) {
-      return currentUser;
+    const user = await AuthAPI.getUser();
+    if (!user.isError) {
+      store.set('user', JSON.parse(user.data));
+      return user.data;
     } else {
-      const user = await AuthAPI.getUser();
-      if (!user.isError) {
-        store.set('user', JSON.parse(user.data));
-        return user.data;
-      } else {
-        alert('Unexpected error');
-        return null;
-      }
+      alert('Unexpected error');
+      return null;
     }
   }
 
