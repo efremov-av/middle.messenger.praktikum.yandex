@@ -6,7 +6,7 @@ export const getData = (form: any) => {
   let object = Object.fromEntries(formData);
 
   for (const key in object) {
-    if (typeof object[key] === 'string') {
+    if (typeof object[key] === 'string' && !key.toLowerCase().includes('password')) {
       object[key] = sanitizeHTML(object[key] as string);
     }
   }
