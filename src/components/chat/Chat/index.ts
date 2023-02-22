@@ -9,7 +9,7 @@ import { validation } from '../../../utils/validation';
 import { TextboxValidation } from '../../textboxValidation';
 import Connect from '../../../services/Store/Connect';
 import { Modal } from '../../modal';
-import store from '../../../services/Store/store';
+import store from '../../../services/Store/Store';
 import { ModalNewChatContent, modalNewChatContentProps } from '../ModalNewChatContent';
 import { ModalAddUserContent } from '../ModalAddUserContent';
 import ChatActions from '../../../actions/ChatActions';

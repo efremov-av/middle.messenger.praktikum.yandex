@@ -7,7 +7,7 @@ import { validation } from '../../../utils/validation';
 import Button from '../../button';
 import { getData } from '../../../utils/utils';
 import ChatActions from '../../../actions/ChatActions';
-import store from '../../../services/Store/store';
+import store from '../../../services/Store/Store';
 
 type PropsType = {
   events: ComponentEvent;

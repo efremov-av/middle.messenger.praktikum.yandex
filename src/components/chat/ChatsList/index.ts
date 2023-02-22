@@ -4,7 +4,7 @@ import Block from '../../common/Block';
 import { ChatsListItem } from '../ChatsListItem';
 import Button from '../../button';
 import ChatActions from '../../../actions/ChatActions';
-import store from '../../../services/Store/store';
+import store from '../../../services/Store/Store';
 
 type PropsType = {
   chats: IChat[];

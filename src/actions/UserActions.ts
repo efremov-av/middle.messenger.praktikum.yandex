@@ -1,5 +1,5 @@
 import UserAPI from '../api/user-api';
-import store from '../services/Store/store';
+import store from '../services/Store/Store';
 import AuthActions from './AuthActions';
 
 class ChatActions {

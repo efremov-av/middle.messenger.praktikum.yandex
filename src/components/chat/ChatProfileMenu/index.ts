@@ -3,7 +3,7 @@ import './style.scss';
 import Block from '../../common/Block';
 import Button from '../../button';
 import ChatActions from '../../../actions/ChatActions';
-import store from '../../../services/Store/store';
+import store from '../../../services/Store/Store';
 
 type PropsType = {
   activeChat: IChat | null;

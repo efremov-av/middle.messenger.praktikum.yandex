@@ -1,5 +1,5 @@
 import ChatAPI from '../api/chat-api';
-import store from '../services/Store/store';
+import store from '../services/Store/Store';
 
 class ChatActions {
   public async getChats() {

@@ -1,6 +1,6 @@
 import AuthAPI from '../api/auth-api';
 import Router from '../services/Router/Router';
-import store from '../services/Store/store';
+import store from '../services/Store/Store';
 import { Routes } from '../utils/constants';
 import { getErrorMessage } from '../utils/utils';
 
