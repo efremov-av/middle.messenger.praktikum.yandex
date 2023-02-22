@@ -21,6 +21,7 @@ type PropsType = {
   validationLogin: Block;
   validationPassword: Block;
   events: ComponentEvent;
+  user: IUser | null;
 };
 
 const submit = new Button({

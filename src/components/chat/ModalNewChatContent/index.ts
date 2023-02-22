@@ -56,7 +56,7 @@ export const modalNewChatContentProps: PropsType = {
   events: {
     submit: async function (e: Event) {
       e.preventDefault();
-      const data = getData(e.target);
+      const data = getData(e.target, true);
 
       const validationResults: boolean[] = [];
 

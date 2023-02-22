@@ -111,11 +111,10 @@ export class ProfilePage extends Block<PropsType> {
           submit: async (e: Event) => {
             e.preventDefault();
             const data = getData(e.target);
-            console.log({ data });
 
             if (data.avatar) {
               const response = await UserActions.changeAvatar(data.avatar as File);
-              console.log({ response });
+
               if (!response.isError) {
                 Router.go(Routes.Profile);
               } else {

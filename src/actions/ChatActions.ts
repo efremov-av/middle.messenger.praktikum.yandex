@@ -37,7 +37,6 @@ class ChatActions {
   }
 
   public async setActiveChat(chat: IChat | null) {
-    console.log('setActiveChat');
     if (chat && (store.getState().activeChat as IChat | null)?.id !== chat?.id) {
       store.set('activeChat', chat);
       const response = await ChatAPI.getToken(chat.id);

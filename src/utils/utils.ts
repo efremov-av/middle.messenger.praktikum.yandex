@@ -1,12 +1,12 @@
 import { sanitizeHTML } from './helpers';
 
-export const getData = (form: any) => {
+export const getData = (form: any, sanitize: boolean = false) => {
   var formData = new FormData(form);
 
   let object = Object.fromEntries(formData);
 
-  for (const key in object) {
-    if (typeof object[key] === 'string' && !key.toLowerCase().includes('password')) {
+  if (sanitize) {
+    for (const key in object) {
       object[key] = sanitizeHTML(object[key] as string);
     }
   }

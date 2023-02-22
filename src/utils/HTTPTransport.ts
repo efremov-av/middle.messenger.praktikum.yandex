@@ -72,7 +72,6 @@ export default class HTTPTransport {
     const { method = METHODS.GET, data, headers, timeout = 5000, withCredentials = true } = options;
     if (method === METHODS.GET && data) {
       url = queryStringify(url, data);
-      console.log(url);
     }
 
     return new Promise((resolve, reject) => {
@@ -106,7 +105,6 @@ export default class HTTPTransport {
         xhr.send();
       } else {
         if (data instanceof FormData) {
-          console.log('FILE', data.get('avatar'));
           xhr.send(data);
         } else {
           xhr.send(JSON.stringify(data));

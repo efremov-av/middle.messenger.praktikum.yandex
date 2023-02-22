@@ -52,7 +52,6 @@ export function isEqual(obj1: any, obj2: any) {
 }
 
 export const sanitizeHTML = (str: string) => {
-  console.log('sanitize', str);
   return str.replace(/[^\w. ]/gi, function (c) {
     return '&#' + c.charCodeAt(0) + ';';
   });

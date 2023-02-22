@@ -14,7 +14,13 @@ import Connect from './services/Store/Connect';
 window.addEventListener('DOMContentLoaded', () => {
   Router.use(Routes.Index, PagesList, pageListProps);
   Router.use(Routes.Main, MainPage);
-  Router.use(Routes.SignIn, SignIn, signInProps);
+  Router.use(
+    Routes.SignIn,
+    Connect(SignIn, (state: Record<string, any>) => {
+      return { user: state.user ?? null };
+    }),
+    signInProps
+  );
   Router.use(Routes.SignUp, SignUp, signUpProps);
   Router.use(
     Routes.Profile,

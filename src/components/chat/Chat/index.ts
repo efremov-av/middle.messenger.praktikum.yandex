@@ -38,7 +38,6 @@ export class Chat extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
 
-    console.log('constructor');
     this.initWebSocket();
   }
 
@@ -64,9 +63,8 @@ export class Chat extends Block<PropsType> {
     }
 
     if (activeChat && user && token) {
-      console.log('init', { activeChat: activeChat.id, user: user.id, token });
       const url = `wss://ya-praktikum.tech/ws/chats/${user?.id}/${activeChat.id}/${token}`;
-      console.log(url);
+
       this.socket = new WebSocket(url);
 
       this.socket.addEventListener('message', (event) => {
@@ -179,6 +177,8 @@ export class Chat extends Block<PropsType> {
           store.set('modalNewChatVisible', false);
         },
       });
+    } else {
+      this.children.modalNewChat = [];
     }
 
     if (this.props.modalAddUserVisible) {
@@ -189,7 +189,7 @@ export class Chat extends Block<PropsType> {
           events: {
             submit: async function (e: Event) {
               e.preventDefault();
-              const data = getData(e.target);
+              const data = getData(e.target, true);
 
               const validationResults: boolean[] = [];
 
@@ -199,7 +199,6 @@ export class Chat extends Block<PropsType> {
 
               if (!validationResults.some((r) => r === false)) {
                 const searchedUsers = await UserActions.searchUser(data.login as string);
-                console.log({ searchedUsers });
                 if (!searchedUsers.isError) {
                   const data = JSON.parse(searchedUsers.data);
                   if (Array.isArray(data) && data.length === 1 && self.props.activeChat) {
@@ -237,7 +236,7 @@ export class Chat extends Block<PropsType> {
           events: {
             submit: async function (e: Event) {
               e.preventDefault();
-              const data = getData(e.target);
+              const data = getData(e.target, true);
 
               const validationResults: boolean[] = [];
 
@@ -247,7 +246,6 @@ export class Chat extends Block<PropsType> {
 
               if (!validationResults.some((r) => r === false)) {
                 const searchedUsers = await UserActions.searchUser(data.login as string);
-                console.log({ searchedUsers });
                 if (!searchedUsers.isError) {
                   const data = JSON.parse(searchedUsers.data);
                   if (Array.isArray(data) && data.length === 1 && self.props.activeChat) {
@@ -276,6 +274,8 @@ export class Chat extends Block<PropsType> {
           store.set('modalDeleteUserVisible', false);
         },
       });
+    } else {
+      this.children.modalDeleteUser = [];
     }
 
     return this.compile(tpl, {

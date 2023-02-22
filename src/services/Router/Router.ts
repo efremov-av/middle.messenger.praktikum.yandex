@@ -87,7 +87,6 @@ export class Router {
 
   private async checkAuth() {
     const user = await AuthActions.getUser();
-    console.log({ user });
     if (!user) {
       this.go(Routes.SignIn);
     }
