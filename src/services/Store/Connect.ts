@@ -1,5 +1,5 @@
 import Block from '../../components/common/Block';
-import store, { StoreEvents } from './store';
+import store, { StoreEvents } from './Store';
 
 export interface BlockCounstuctor<P extends Record<string, any> = any> {
   new (props: P): Block<P>;
