@@ -6,7 +6,11 @@ import { getErrorMessage } from '../utils/utils';
 
 class AuthActions {
   public async signIn(login: string, password: string) {
-    await AuthAPI.logout();
+    try {
+      await AuthAPI.logout();
+    } catch {
+      console.log('user already logged out');
+    }
     const response = await AuthAPI.signIn(login, password);
 
     if (!response.isError) {

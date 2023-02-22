@@ -126,7 +126,9 @@ export class ProfilePage extends Block<PropsType> {
         },
       });
     }
+  }
 
+  render() {
     this.children.fieldLogin = new ProfileFieldInput({
       name: 'login',
       placeholder: 'Введите логин',
@@ -229,11 +231,10 @@ export class ProfilePage extends Block<PropsType> {
         },
       },
     });
-  }
 
-  render() {
     return this.compile(tpl, {
       ...this.props,
+      title: this.props.user?.first_name,
       avatarUrl: this.props.user?.avatar ? `${imageHostUrl}${this.props.user?.avatar}` : '',
     });
   }

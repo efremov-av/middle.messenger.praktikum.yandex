@@ -94,12 +94,19 @@ export class Router {
   }
 
   public async start() {
-    this.checkAuth();
+    if (window.location.pathname !== Routes.SignIn && window.location.pathname !== Routes.SignUp) {
+      this.checkAuth();
+    }
 
     window.onpopstate = async (event: PopStateEvent) => {
       const target = event.currentTarget as Window;
 
-      this.checkAuth();
+      if (
+        target.location.pathname !== Routes.SignIn &&
+        target.location.pathname !== Routes.SignUp
+      ) {
+        this.checkAuth();
+      }
 
       this._onRoute(target.location.pathname);
     };

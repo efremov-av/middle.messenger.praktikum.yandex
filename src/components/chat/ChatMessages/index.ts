@@ -6,6 +6,7 @@ import { ChatMessage } from '../ChatMessage';
 type PropsType = {
   messages: IMessage[];
   user: IUser | null;
+  chatUsers: IUser[];
 };
 
 export class ChatMessages extends Block<PropsType> {
@@ -20,7 +21,10 @@ export class ChatMessages extends Block<PropsType> {
       .sort(function (a, b) {
         return (new Date(a.time) as any) - (new Date(b.time) as any);
       })
-      .map((m) => new ChatMessage({ message: m, user: this.props.user }));
+      .map(
+        (m) =>
+          new ChatMessage({ message: m, user: this.props.user, chatUsers: this.props.chatUsers })
+      );
 
     return this.compile(tpl, { ...this.props });
   }

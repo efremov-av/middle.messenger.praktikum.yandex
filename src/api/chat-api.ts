@@ -32,6 +32,10 @@ class ChatAPI extends BaseAPI {
   getToken(chatId: number) {
     return instance.post(`/token/${chatId}`) as Promise<HttpResponsePromiseType>;
   }
+
+  getChatUsers(chatId: number) {
+    return instance.get(`/${chatId}/users`) as Promise<HttpResponsePromiseType>;
+  }
 }
 
 export default new ChatAPI();

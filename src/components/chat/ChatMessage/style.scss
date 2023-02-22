@@ -23,6 +23,12 @@
     color: $font-color-1;
   }
 
+  &__author {
+    font-size: 12px;
+    color: $font-color-1;
+    margin-bottom: 4px;
+  }
+
   &_my {
     flex-flow: row-reverse;
 

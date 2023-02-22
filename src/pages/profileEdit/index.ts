@@ -7,10 +7,11 @@ import { getData, getErrorMessage } from '../../utils/utils';
 import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
 import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { validation } from '../../utils/validation';
-import { Routes } from '../../utils/constants';
+import { imageHostUrl, Routes } from '../../utils/constants';
 import Router from '../../services/Router/Router';
 import { ProfileFieldInput } from '../../components/profile/profileFieldInput';
 import UserActions from '../../actions/UserActions';
+import { ProfileGoBackButton } from '../../components/profile/ProfileGoBackButton';
 
 type PropsType = {
   labelLogin: Block;
@@ -54,6 +55,16 @@ export class ProfileEditPage extends Block<PropsType> {
   }
 
   protected init(): void {
+    this.children.goBackButton = new ProfileGoBackButton({
+      events: {
+        click: () => {
+          Router.go(Routes.Profile);
+        },
+      },
+    });
+  }
+
+  render() {
     this.children.fieldLogin = new ProfileFieldInput({
       name: 'login',
       placeholder: 'Введите логин',
@@ -156,10 +167,11 @@ export class ProfileEditPage extends Block<PropsType> {
         },
       },
     });
-  }
 
-  render() {
-    return this.compile(tpl, { ...this.props });
+    return this.compile(tpl, {
+      ...this.props,
+      avatarUrl: this.props.user?.avatar ? `${imageHostUrl}${this.props.user?.avatar}` : '',
+    });
   }
 }
 

@@ -18,6 +18,7 @@ class UserAPI extends BaseAPI {
   changeAvatar(formData: FormData) {
     return instance.put('/profile/avatar', {
       data: formData,
+      headers: { 'content-type': 'multipart/form-data' },
     }) as Promise<HttpResponsePromiseType>;
   }
 

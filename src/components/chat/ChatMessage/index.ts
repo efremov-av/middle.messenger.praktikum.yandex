@@ -5,6 +5,7 @@ import Block from '../../common/Block';
 type PropsType = {
   message: IMessage;
   user: IUser | null;
+  chatUsers: IUser[];
 };
 
 export class ChatMessage extends Block<PropsType> {
@@ -21,11 +22,14 @@ export class ChatMessage extends Block<PropsType> {
       time = new Date(this.props.message.time).toLocaleTimeString('ru-RU');
     }
 
+    const author = this.props.chatUsers.find((u) => u.id === this.props.message.user_id);
+    const isMy = this.props.user?.id === this.props.message.user_id;
+
     return this.compile(tpl, {
-      // author: this.props.message.user_id,
+      author: !isMy ? author?.display_name ?? `${author?.first_name} ${author?.second_name}` : '',
       content: this.props.message.content,
       time,
-      isMy: this.props.user?.id === this.props.message.user_id ? 'chat-message_my' : '',
+      isMy: isMy ? 'chat-message_my' : '',
     });
   }
 }

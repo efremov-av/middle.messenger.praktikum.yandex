@@ -42,6 +42,7 @@ class ChatActions {
       store.set('activeChat', chat);
       const response = await ChatAPI.getToken(chat.id);
       store.set('token', JSON.parse(response.data).token);
+      this.getChatUsers(chat.id);
       this.setMessages(undefined);
     } else {
       store.set('activeChat', null);
@@ -66,6 +67,13 @@ class ChatActions {
       store.set('messages', messages);
     } else {
       store.set('messages', newMessages);
+    }
+  }
+
+  public async getChatUsers(chatId: number) {
+    const response = await ChatAPI.getChatUsers(chatId);
+    if (!response.isError) {
+      store.set('chatUsers', JSON.parse(response.data));
     }
   }
 }

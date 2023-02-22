@@ -9,8 +9,9 @@ import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
 import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { validation } from '../../utils/validation';
 import Router from '../../services/Router/Router';
-import { Routes } from '../../utils/constants';
+import { imageHostUrl, Routes } from '../../utils/constants';
 import UserActions from '../../actions/UserActions';
+import { ProfileGoBackButton } from '../../components/profile/ProfileGoBackButton';
 
 type PropsType = {
   fieldOldPassword: Block;
@@ -88,8 +89,21 @@ export class ProfilePassword extends Block {
     super(props);
   }
 
+  init() {
+    this.children.goBackButton = new ProfileGoBackButton({
+      events: {
+        click: () => {
+          Router.go(Routes.Profile);
+        },
+      },
+    });
+  }
+
   render() {
-    return this.compile(tpl, { ...this.props });
+    return this.compile(tpl, {
+      ...this.props,
+      avatarUrl: this.props.user?.avatar ? `${imageHostUrl}${this.props.user?.avatar}` : '',
+    });
   }
 }
 

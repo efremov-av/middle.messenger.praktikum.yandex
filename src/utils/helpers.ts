@@ -50,3 +50,10 @@ export function isEqual(obj1: any, obj2: any) {
   if (type === 'function') return areFunctionsEqual();
   return arePrimativesEqual();
 }
+
+export const sanitizeHTML = (str: string) => {
+  console.log('sanitize', str);
+  return str.replace(/[^\w. ]/gi, function (c) {
+    return '&#' + c.charCodeAt(0) + ';';
+  });
+};

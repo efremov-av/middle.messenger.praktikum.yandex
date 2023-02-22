@@ -71,9 +71,15 @@ export class Chat extends Block<PropsType> {
 
       this.socket.addEventListener('message', (event) => {
         try {
-          const data: IMessage[] = JSON.parse(event.data);
+          const data: IMessage[] | IMessage = JSON.parse(event.data);
           console.log('Получены данные', data);
-          ChatActions.addMessages(data, 'end');
+          if (Array.isArray(data)) {
+            ChatActions.addMessages(data, 'end');
+          } else {
+            if (data.type === 'message') {
+              ChatActions.addMessages([data], 'end');
+            }
+          }
         } catch (e: any) {
           console.log('ERROR', { event, e });
         }
@@ -103,6 +109,14 @@ export class Chat extends Block<PropsType> {
       this.socket.addEventListener('error', (event: any) => {
         console.log('Ошибка', event.message);
       });
+
+      setInterval(() => {
+        this.socket?.send(
+          JSON.stringify({
+            type: 'ping',
+          })
+        );
+      }, 30000);
     }
   }
 
@@ -148,7 +162,11 @@ export class Chat extends Block<PropsType> {
       (this.children.chatMessageBar as Block).show();
       (this.children.chatProfile as Block).show();
       this.children.chatMessages = new (Connect(ChatMessages, (state: any) => {
-        return { messages: state.messages ?? [], user: state.user ?? null };
+        return {
+          messages: state.messages ?? [],
+          user: state.user ?? null,
+          chatUsers: state.chatUsers ?? [],
+        };
       }))({});
     }
 
@@ -188,7 +206,6 @@ export class Chat extends Block<PropsType> {
                     const user: IUser = data[0];
                     const response = await ChatActions.addUser(self.props.activeChat.id, user.id);
                     if (!response.isError) {
-                      console.log('ASDSADSAD');
                       store.set('modalAddUserVisible', false);
                     } else {
                       alert(getErrorMessage(response.data));

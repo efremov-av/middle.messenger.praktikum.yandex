@@ -1,7 +1,17 @@
+import { sanitizeHTML } from './helpers';
+
 export const getData = (form: any) => {
   var formData = new FormData(form);
 
-  return Object.fromEntries(formData);
+  let object = Object.fromEntries(formData);
+
+  for (const key in object) {
+    if (typeof object[key] === 'string') {
+      object[key] = sanitizeHTML(object[key] as string);
+    }
+  }
+
+  return object;
 };
 
 export const getErrorMessage = (data: any) => {
