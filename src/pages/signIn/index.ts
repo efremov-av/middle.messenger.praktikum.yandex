@@ -7,6 +7,9 @@ import { getData } from '../../utils/utils';
 import { validation } from '../../utils/validation';
 import { TextboxValidation } from '../../components/textboxValidation';
 import { TextboxLabel } from '../../components/textboxLabel';
+import { Routes } from '../../utils/constants';
+import AuthActions from '../../actions/AuthActions';
+import Router from '../../services/Router/Router';
 
 type PropsType = {
   submit: Block;
@@ -18,6 +21,7 @@ type PropsType = {
   validationLogin: Block;
   validationPassword: Block;
   events: ComponentEvent;
+  user: IUser | null;
 };
 
 const submit = new Button({
@@ -28,7 +32,12 @@ const submit = new Button({
 const link = new Button({
   text: 'Зарегистрироваться',
   modificator: 'link',
-  href: '/signup',
+  type: 'button',
+  events: {
+    click: () => {
+      Router.go(Routes.SignUp);
+    },
+  },
 });
 const labelLogin = new TextboxLabel({
   label: 'Логин',
@@ -68,7 +77,7 @@ const textboxPassword = new TextboxInput({
 });
 const validationLogin = new TextboxValidation({ text: null });
 const validationPassword = new TextboxValidation({ text: null });
-class SignIn extends Block {
+export class SignIn extends Block {
   constructor(props: PropsType) {
     super(props);
   }
@@ -77,7 +86,7 @@ class SignIn extends Block {
     return this.compile(tpl, {});
   }
 }
-const signIn = new SignIn({
+export const signInProps = {
   submit,
   link,
   labelLogin,
@@ -97,13 +106,10 @@ const signIn = new SignIn({
       validationResults.push(validation.password(validationPassword, data.password as string));
 
       if (!validationResults.some((r) => r === false)) {
-        console.log('API request payload', data);
-        window.location.href = '/main';
+        AuthActions.signIn(data.login as string, data.password as string);
       } else {
         console.log('validation did not passed');
       }
     },
   },
-});
-
-export default signIn;
+};

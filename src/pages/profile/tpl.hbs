@@ -2,18 +2,16 @@
   <section class="content">
     <div class="profile__container">
       <div class="profile__left profile-go-back">
-        <a href="/main" class="profile-go-back__button">
-          <span class="gg-arrow-left"></span>
-        </a>
+        {{{goBackButton}}}
       </div>
       <div class="profile__right">
         <div class="profile__content">
           <div class="profile-avatar">
-            <div class="profile-avatar__container">
-              <a class="profile-avatar__button" href="/profile/avatar">Поменять аватар</a>
+            <div class="profile-avatar__container" style="background-image: url({{avatarUrl}})">
+              {{{profileAvatarButton}}}
             </div>
           </div>
-          <div class="profile-title">Иван</div>
+          <div class="profile-title">{{title}}</div>
           <div class="profile-form">
             <div class="profile-field">
               {{{labelEmail}}}

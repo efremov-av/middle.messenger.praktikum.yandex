@@ -1,5 +1,6 @@
 import { v4 as makeUUID } from 'uuid';
-import EventBus from '../../modules/EventBus';
+import EventBus from '../../utils/EventBus';
+import { isEqual } from '../../utils/helpers';
 
 // Нельзя создавать экземпляр данного класса
 class Block<P extends Record<string, any> = any> {
@@ -87,8 +88,8 @@ class Block<P extends Record<string, any> = any> {
     }
   }
 
-  public componentDidUpdate(_oldProps: P, _newProps: P) {
-    return true;
+  public componentDidUpdate(oldProps: P, newProps: P) {
+    return !isEqual(oldProps, newProps);
   }
 
   public setProps = (nextProps: P) => {
@@ -96,7 +97,15 @@ class Block<P extends Record<string, any> = any> {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    const oldValue = { ...this.props };
+
+    const { children, props } = this._getChildren(nextProps);
+
+    if (Object.values(children).length) Object.assign(this.children, children);
+
+    if (Object.values(props).length) Object.assign(this.props, props);
+
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldValue, props);
   };
 
   get element() {
@@ -126,27 +135,16 @@ class Block<P extends Record<string, any> = any> {
   }
 
   private _makePropsProxy(props: P) {
-    const self = this;
     const proxyProps = new Proxy(props, {
       get(target: any, prop: string) {
-        if (prop.startsWith('_')) {
-          throw new Error('Нет прав');
-        } else {
-          const value = target[prop];
-          return typeof value === 'function' ? value.bind(target) : value;
-        }
+        const value = target[prop];
+        return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target: any, prop: any, val: any) {
-        if (prop.startsWith('_')) {
-          throw new Error('Нет прав');
-        } else {
+        if (target[prop] !== val) {
           target[prop] = val;
-          self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
-          return true;
         }
-      },
-      deleteProperty(_target: any, _prop: any) {
-        throw new Error('Нет прав');
+        return true;
       },
     });
 

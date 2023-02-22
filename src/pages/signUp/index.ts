@@ -3,10 +3,13 @@ import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../components/common/Block';
 import { TextboxInput } from '../../components/textboxInput';
-import { getData } from '../../utils/utils';
+import { getData, getErrorMessage } from '../../utils/utils';
 import { TextboxValidation } from '../../components/textboxValidation';
 import { validation } from '../../utils/validation';
 import { TextboxLabel } from '../../components/textboxLabel';
+import { Routes } from '../../utils/constants';
+import Router from '../../services/Router/Router';
+import AuthActions from '../../actions/AuthActions';
 
 type PropsType = {
   submit: Block;
@@ -43,7 +46,12 @@ const submit = new Button({
 const link = new Button({
   text: 'Войти',
   modificator: 'link',
-  href: '/signin',
+  type: 'button',
+  events: {
+    click: () => {
+      Router.go(Routes.SignIn);
+    },
+  },
 });
 const textboxLogin = new TextboxInput({
   name: 'login',
@@ -159,7 +167,7 @@ const validationEmail = new TextboxValidation({ text: null });
 const validationPhone = new TextboxValidation({ text: null });
 const validationPassword = new TextboxValidation({ text: null });
 const validationRepeatPassword = new TextboxValidation({ text: null });
-class SignUp extends Block {
+export class SignUp extends Block {
   constructor(props: PropsType) {
     super(props);
   }
@@ -169,7 +177,7 @@ class SignUp extends Block {
   }
 }
 
-const signUp = new SignUp({
+export const signUpProps = {
   submit,
   link,
   textboxLogin,
@@ -194,7 +202,7 @@ const signUp = new SignUp({
   validationPassword,
   validationRepeatPassword,
   events: {
-    submit: function (e: Event) {
+    submit: async function (e: Event) {
       e.preventDefault();
       const data = getData(e.target);
 
@@ -216,12 +224,23 @@ const signUp = new SignUp({
 
       if (!validationResults.some((r) => r === false)) {
         console.log('API request payload', data);
-        window.location.href = '/signin';
+        const response = await AuthActions.signUp({
+          first_name: data.first_name as string,
+          second_name: data.second_name as string,
+          login: data.login as string,
+          email: data.email as string,
+          password: data.password as string,
+          phone: data.phone as string,
+        });
+        if (!response.isError) {
+          alert('Вы успешно зарегистрировались!');
+          Router.go(Routes.SignIn);
+        } else {
+          alert(getErrorMessage(response.data));
+        }
       } else {
         console.log('validation did not passed');
       }
     },
   },
-});
-
-export default signUp;
+};

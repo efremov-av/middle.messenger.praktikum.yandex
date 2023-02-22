@@ -34,9 +34,9 @@
       background-color: #efefef;
       border-radius: 50%;
       background-image: url("/static/img/avatar.png");
-      background-size: 64px;
       background-repeat: no-repeat;
       background-position: center;
+      background-size: cover;
       overflow: hidden;
     }
 
@@ -81,16 +81,6 @@
     align-items: center;
     background-color: #fbfbfb;
     border-right: 1px solid $border-color;
-
-    &__button {
-      background-color: $color-primary;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-    }
   }
 }
 

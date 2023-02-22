@@ -1,0 +1,15 @@
+@import "./../../../variables.scss";
+
+.profile-field-input {
+  flex-grow: 1;
+  text-align: right;
+  border: none;
+  padding: 4px 0;
+  font-size: 13px;
+  outline: none;
+
+  &:disabled {
+    background-color: transparent;
+    color: $font-color-1;
+  }
+}

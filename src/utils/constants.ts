@@ -84,3 +84,20 @@ export const pages = [
     url: '/500',
   },
 ];
+
+export enum Routes {
+  Index = '/',
+  Main = '/main',
+  SignUp = '/signup',
+  SignIn = '/signin',
+  Profile = '/profile',
+  ProfileEdit = '/profile/edit',
+  ProfilePassword = '/profile/password',
+  ProfileAvatar = '/profile/avatar',
+  Page500 = '/500',
+  Page404 = '/404',
+}
+
+export const baseUrl = 'https://ya-praktikum.tech/api/v2';
+export const defaultHeaders = { 'Content-Type': 'application/json' };
+export const imageHostUrl = 'https://ya-praktikum.tech/api/v2/resources/';

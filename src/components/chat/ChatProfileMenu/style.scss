@@ -1,0 +1,56 @@
+@import "./../../../variables.scss";
+
+.chat-profile-menu {
+  position: relative;
+
+  &__button {
+    width: 25px;
+    height: 25px;
+    background-color: $bg-color-button;
+    border: none;
+    color: $color-primary;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    span {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background-color: $color-primary;
+      margin: 2px;
+    }
+  }
+
+  &__content {
+    display: none;
+    position: absolute;
+    top: 25px;
+    right: 0px;
+    background: $color-white;
+    box-shadow: 0px 2px 15px $shadow-color;
+    border-radius: 12px;
+    padding: 7px 15px;
+    width: 200px;
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin: 8px 0;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &:hover .chat-profile-menu__content {
+    display: block;
+  }
+}

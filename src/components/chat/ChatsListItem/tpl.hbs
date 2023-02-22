@@ -1,15 +1,15 @@
-<div class="chats-list-item">
+<div class="chats-list-item {{activeClass}}" id="chat_{{id}}">
   <div>
     <div class="chats-list-item__avatar"></div>
   </div>
   <div>
     <div class="chats-list-item__title">{{title}}</div>
-    {{#with message}}
+    {{#with last_message}}
     <div class="chats-list-item__message">
-      {{{text}}}
+      {{{content}}}
     </div>
-    <div class="chats-list-item__date">{{date}}</div>
+    <div class="chats-list-item__date">{{time}}</div>
     {{/with}}
-    <div class="chats-list-item__unread">{{{unreadedMessagesCount}}}</div>
+    <div class="chats-list-item__unread">{{{unread_count}}}</div>
   </div>
 </div>

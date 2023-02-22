@@ -1,9 +1,10 @@
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../../common/Block';
+import { ChatProfileMenu } from '../ChatProfileMenu';
 
 type PropsType = {
-  title: string;
+  activeChat: IChat | null;
 };
 
 export class ChatProfile extends Block<PropsType> {
@@ -11,9 +12,14 @@ export class ChatProfile extends Block<PropsType> {
     super(props);
   }
 
+  protected init(): void {
+    this.children.menu = new ChatProfileMenu({ activeChat: this.props.activeChat });
+  }
+
   render(): DocumentFragment {
     return this.compile(tpl, {
-      ...this.props,
+      imgUrl: this.props.activeChat?.avatar,
+      title: this.props.activeChat?.title,
     });
   }
 }

@@ -6,6 +6,7 @@
   flex-direction: column;
 
   &__header {
+    flex-shrink: 0;
     height: 54px;
     background-color: white;
     border-bottom: 1px solid $border-color;
@@ -14,9 +15,11 @@
   &__content {
     flex-grow: 1;
     flex-shrink: 1;
+    overflow: auto;
   }
 
   &__footer {
+    flex-shrink: 0;
     height: 54px;
     background-color: blue;
     background-color: white;

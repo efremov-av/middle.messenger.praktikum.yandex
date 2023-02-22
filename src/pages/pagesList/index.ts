@@ -11,7 +11,7 @@ type PagesType = {
 type PropsType = {
   pages: PagesType[];
 };
-class PagesList extends Block {
+export class PagesList extends Block {
   constructor(props: PropsType) {
     super(props);
   }
@@ -21,8 +21,6 @@ class PagesList extends Block {
   }
 }
 
-const signIn = new PagesList({
+export const pageListProps = {
   pages,
-});
-
-export default signIn;
+};

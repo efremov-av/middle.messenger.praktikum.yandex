@@ -3,11 +3,15 @@ import './../profile/style.scss';
 import './style.scss';
 import Block from '../../components/common/Block';
 import Button from '../../components/button';
-import { ProfileFieldInput } from '../../components/profileFieldInput';
-import { getData } from '../../utils/utils';
-import { ProfileFieldLabel } from '../../components/profileFieldLabel';
-import { ProfileFieldValidation } from '../../components/profileFieldValidation';
+import { ProfileFieldInput } from '../../components/profile/profileFieldInput';
+import { getData, getErrorMessage } from '../../utils/utils';
+import { ProfileFieldLabel } from '../../components/profile/profileFieldLabel';
+import { ProfileFieldValidation } from '../../components/profile/profileFieldValidation';
 import { validation } from '../../utils/validation';
+import Router from '../../services/Router/Router';
+import { imageHostUrl, Routes } from '../../utils/constants';
+import UserActions from '../../actions/UserActions';
+import { ProfileGoBackButton } from '../../components/profile/ProfileGoBackButton';
 
 type PropsType = {
   fieldOldPassword: Block;
@@ -85,12 +89,25 @@ export class ProfilePassword extends Block {
     super(props);
   }
 
+  init() {
+    this.children.goBackButton = new ProfileGoBackButton({
+      events: {
+        click: () => {
+          Router.go(Routes.Profile);
+        },
+      },
+    });
+  }
+
   render() {
-    return this.compile(tpl, { ...this.props });
+    return this.compile(tpl, {
+      ...this.props,
+      avatarUrl: this.props.user?.avatar ? `${imageHostUrl}${this.props.user?.avatar}` : '',
+    });
   }
 }
 
-const profilePassword = new ProfilePassword({
+export const profilePasswordProps = {
   fieldNewPassword,
   fieldOldPassword,
   fieldRepeatNewPassword,
@@ -102,7 +119,7 @@ const profilePassword = new ProfilePassword({
   validationRepeatNewPassword,
   buttonSave,
   events: {
-    submit: (e: Event) => {
+    submit: async (e: Event) => {
       e.preventDefault();
       const data = getData(e.target);
 
@@ -123,12 +140,18 @@ const profilePassword = new ProfilePassword({
       );
 
       if (!validationResults.some((r) => r === false)) {
-        console.log('API request payload', data);
-        window.location.href = '/profile';
+        const response = await UserActions.changePassword(
+          data.oldPassword as string,
+          data.newPassword as string
+        );
+        if (!response.isError) {
+          Router.go(Routes.Profile);
+        } else {
+          alert(getErrorMessage(response.data));
+        }
       } else {
         console.log('validation did not passed');
       }
     },
   },
-});
-export default profilePassword;
+};

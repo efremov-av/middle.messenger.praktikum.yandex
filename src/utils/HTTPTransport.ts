@@ -5,6 +5,19 @@ const METHODS = {
   DELETE: 'DELETE',
 };
 
+export type HttpOptionsType = {
+  method?: string;
+  data?: Record<string, unknown> | FormData;
+  headers?: Record<string, string>;
+  timeout?: number;
+  withCredentials?: boolean;
+};
+
+export type HttpResponsePromiseType = {
+  isError: boolean;
+  data: any;
+};
+
 function queryStringify(url: string, data: any) {
   let arr: string[] = [];
   Object.keys(data).forEach((key) => {
@@ -17,29 +30,48 @@ function queryStringify(url: string, data: any) {
   return url + (arr.length > 0 ? '?' + arr.join('&') : '');
 }
 
-type HTTPMethod = (url: string, options?: any) => Promise<unknown>;
-class HTTPTransport {
+type HTTPMethod = (url: string, options?: HttpOptionsType) => Promise<unknown>;
+export default class HTTPTransport {
+  private _baseUrl: string;
+  private _headers: Record<string, string>;
+
+  constructor(baseUrl: string, headers: Record<string, string>) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
+  }
+
+  private fullUrl = (url: string) => {
+    return `${this._baseUrl}${url}`;
+  };
+
   get: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+    return this.requestPromise(
+      this.request(this.fullUrl(url), { ...options, method: METHODS.GET })
+    );
   };
 
   put: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+    return this.requestPromise(
+      this.request(this.fullUrl(url), { ...options, method: METHODS.PUT })
+    );
   };
 
   post: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+    return this.requestPromise(
+      this.request(this.fullUrl(url), { ...options, method: METHODS.POST })
+    );
   };
 
   delete: HTTPMethod = (url, options = {}) => {
-    return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+    return this.requestPromise(
+      this.request(this.fullUrl(url), { ...options, method: METHODS.DELETE })
+    );
   };
 
-  request = (url: string, options: any, timeout: number = 5000) => {
-    const { method, data, headers = {} } = options;
-    if (method === METHODS.GET) {
+  private request = (url: string, options: HttpOptionsType) => {
+    const { method = METHODS.GET, data, headers, timeout = 5000, withCredentials = true } = options;
+    if (method === METHODS.GET && data) {
       url = queryStringify(url, data);
-      console.log(url);
     }
 
     return new Promise((resolve, reject) => {
@@ -55,15 +87,40 @@ class HTTPTransport {
       xhr.onerror = reject;
       xhr.ontimeout = reject;
 
-      Object.keys(headers).forEach((key) => {
-        xhr.setRequestHeader(key, headers[key]);
-      });
+      if (withCredentials) {
+        xhr.withCredentials = true;
+      }
+
+      if (!headers) {
+        Object.keys(this._headers).forEach((key) => {
+          xhr.setRequestHeader(key, this._headers[key]);
+        });
+      } else {
+        Object.keys(headers).forEach((key) => {
+          xhr.setRequestHeader(key, headers[key]);
+        });
+      }
 
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.send(data);
+        if (data instanceof FormData) {
+          xhr.send(data);
+        } else {
+          xhr.send(JSON.stringify(data));
+        }
       }
     });
+  };
+
+  private requestPromise = async (promise: Promise<unknown>): Promise<HttpResponsePromiseType> => {
+    return promise
+      .then((res: XMLHttpRequest) => {
+        return { isError: res.status >= 400, data: res.response };
+      })
+      .catch((e) => {
+        console.log('ERROR', e);
+        return { isError: true, data: e };
+      });
   };
 }

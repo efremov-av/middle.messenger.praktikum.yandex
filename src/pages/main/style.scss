@@ -25,7 +25,6 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding-top: 10px;
 
     &__header {
       padding: 14px 10px;
@@ -35,7 +34,6 @@
     }
 
     &__content {
-      padding: 0 10px;
       flex-grow: 1;
       flex-shrink: 1;
       padding-bottom: 20px;
@@ -50,9 +48,12 @@
       font-size: 12px;
       line-height: 12px;
 
-      > a {
+      > button {
+        border: none;
+        background: none;
         text-decoration: none;
         color: $font-color-1;
+        cursor: pointer;
 
         &:hover {
           text-decoration: underline;
