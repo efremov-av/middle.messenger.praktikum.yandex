@@ -6,7 +6,8 @@
     "start": "./node_modules/.bin/webpack --mode=production && node server.js",
     "dev": "./node_modules/.bin/webpack serve",
     "build": "./node_modules/.bin/webpack",
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "precommit": "npm run test"
   },
   "keywords": [],
   "author": "Alexander Efremov",
