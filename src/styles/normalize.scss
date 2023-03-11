@@ -41,40 +41,6 @@ summary {
   display: block;
 }
 
-// Corrects inline-block display not defined in IE6/7/8/9 & FF3
-
-audio,
-canvas,
-video {
-  display: inline-block;
-  @if $legacy_support_for_ie {
-    *display: inline;
-    *zoom: 1;
-  }
-}
-
-// 1. Prevents modern browsers from displaying 'audio' without controls
-// 2. Remove excess height in iOS5 devices
-
-audio:not([controls]) {
-  display: none; // 1
-  height: 0; // 2
-}
-
-//
-// Address `[hidden]` styling not present in IE 8/9.
-// Hide the `template` element in IE, Safari, and Firefox < 22.
-//
-
-[hidden],
-template {
-  display: none;
-}
-
-// =============================================================================
-// Base
-// =============================================================================
-
 // 1. Corrects text resizing oddly in IE6/7 when body font-size is set using em units
 //    http://clagnut.com/blog/348/#c790
 // 2. Prevents iOS text size adjust after orientation change, without disabling user zoom
@@ -436,7 +402,6 @@ button,
 html input[type="button"], // 1
 input[type="reset"],
 input[type="submit"] {
-  -webkit-appearance: button; // 2
   cursor: pointer; // 3
   @if $legacy_support_for_ie {
     *overflow: visible; // 4
@@ -484,7 +449,6 @@ input {
   // 1. Addresses appearance set to searchfield in S5, Chrome
   // 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)
   &[type="search"] {
-    -webkit-appearance: textfield; // 1
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box; // 2
     box-sizing: content-box;
