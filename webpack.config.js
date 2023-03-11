@@ -9,9 +9,10 @@ module.exports = {
     filename: 'eql-chat.bundle.js',
   },
   devServer: {
-    contentBase: 'dist',
-    compress: true,
+    open: true,
+    host: 'localhost',
     port: 3000,
+    historyApiFallback: true,
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
