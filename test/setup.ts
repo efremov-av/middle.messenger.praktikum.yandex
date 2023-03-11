@@ -2,7 +2,7 @@ import jsdom from 'jsdom';
 const { JSDOM } = jsdom;
 
 const dom = new JSDOM(`<!DOCTYPE html><body><main id="root" class="main"></body>`, {
-  url: 'https://localhost:3000',
+  url: 'https://localhost:3001',
   contentType: 'text/html',
 });
 
