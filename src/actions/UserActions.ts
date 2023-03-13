@@ -17,7 +17,6 @@ class ChatActions {
   public async changeAvatar(file: File) {
     const formData = new FormData();
     formData.append('avatar', file, file.name);
-    console.log({ file });
     const response = await UserAPI.changeAvatar(formData);
     await AuthActions.getUser();
     return response;

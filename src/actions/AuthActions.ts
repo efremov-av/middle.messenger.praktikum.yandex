@@ -18,6 +18,10 @@ class AuthActions {
       }
     } else {
       alert(getErrorMessage(response.data));
+      const reason = JSON.parse(response.data).reason;
+      if (reason === 'User already in system') {
+        Router.go(Routes.Main);
+      }
     }
   }
 

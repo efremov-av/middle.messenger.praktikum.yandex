@@ -33,6 +33,8 @@ class Route {
   leave() {
     if (this.block) {
       this.block.element.remove();
+      this.block.element.innerHTML = '';
+      this.block = null;
     }
   }
 

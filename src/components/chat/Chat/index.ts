@@ -72,7 +72,7 @@ export class Chat extends Block<PropsType> {
           const data: IMessage[] | IMessage = JSON.parse(event.data);
           console.log('Получены данные', data);
           if (Array.isArray(data)) {
-            ChatActions.addMessages(data, 'end');
+            ChatActions.setMessages(data);
           } else {
             if (data.type === 'message') {
               ChatActions.addMessages([data], 'end');
@@ -173,7 +173,6 @@ export class Chat extends Block<PropsType> {
         title: 'Создание чата',
         content: new ModalNewChatContent(modalNewChatContentProps),
         onClose: () => {
-          console.log('CLOSE');
           store.set('modalNewChatVisible', false);
         },
       });
@@ -201,13 +200,21 @@ export class Chat extends Block<PropsType> {
                 const searchedUsers = await UserActions.searchUser(data.login as string);
                 if (!searchedUsers.isError) {
                   const data = JSON.parse(searchedUsers.data);
-                  if (Array.isArray(data) && data.length === 1 && self.props.activeChat) {
-                    const user: IUser = data[0];
-                    const response = await ChatActions.addUser(self.props.activeChat.id, user.id);
-                    if (!response.isError) {
-                      store.set('modalAddUserVisible', false);
+                  if (!self.props.activeChat) {
+                    return;
+                  }
+
+                  if (Array.isArray(data)) {
+                    if (data.length === 1) {
+                      const user: IUser = data[0];
+                      const response = await ChatActions.addUser(self.props.activeChat.id, user.id);
+                      if (!response.isError) {
+                        store.set('modalAddUserVisible', false);
+                      } else {
+                        alert(getErrorMessage(response.data));
+                      }
                     } else {
-                      alert(getErrorMessage(response.data));
+                      alert(`Найдено ${data.length} пользователей. Уточните запрос`);
                     }
                   }
                 } else {
@@ -220,7 +227,6 @@ export class Chat extends Block<PropsType> {
           },
         }),
         onClose: () => {
-          console.log('CLOSE');
           store.set('modalAddUserVisible', false);
         },
       });
@@ -248,16 +254,24 @@ export class Chat extends Block<PropsType> {
                 const searchedUsers = await UserActions.searchUser(data.login as string);
                 if (!searchedUsers.isError) {
                   const data = JSON.parse(searchedUsers.data);
-                  if (Array.isArray(data) && data.length === 1 && self.props.activeChat) {
-                    const user: IUser = data[0];
-                    const response = await ChatActions.deleteUser(
-                      self.props.activeChat.id,
-                      user.id
-                    );
-                    if (!response.isError) {
-                      store.set('modalDeleteUserVisible', false);
+                  if (!self.props.activeChat) {
+                    return;
+                  }
+
+                  if (Array.isArray(data)) {
+                    if (data.length === 1) {
+                      const user: IUser = data[0];
+                      const response = await ChatActions.deleteUser(
+                        self.props.activeChat.id,
+                        user.id
+                      );
+                      if (!response.isError) {
+                        store.set('modalDeleteUserVisible', false);
+                      } else {
+                        alert(getErrorMessage(response.data));
+                      }
                     } else {
-                      alert(getErrorMessage(response.data));
+                      alert(`Найдено ${data.length} пользователей. Уточните запрос`);
                     }
                   }
                 } else {
@@ -270,7 +284,6 @@ export class Chat extends Block<PropsType> {
           },
         }),
         onClose: () => {
-          console.log('CLOSE');
           store.set('modalDeleteUserVisible', false);
         },
       });
