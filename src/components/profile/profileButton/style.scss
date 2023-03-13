@@ -1,4 +1,4 @@
-@import "./../../../variables.scss";
+@import "./../../../variables";
 
 .profile-button {
   display: flex;
@@ -18,10 +18,6 @@
     background: transparent;
     padding: 0;
     cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 
   &_danger {
@@ -29,6 +25,11 @@
     button {
       color: $color-red;
     }
+  }
+
+  a:hover,
+  button:hover {
+    text-decoration: underline;
   }
 
   &:last-child {

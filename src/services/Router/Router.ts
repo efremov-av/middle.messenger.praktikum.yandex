@@ -31,7 +31,11 @@ class Route {
   ) {}
 
   leave() {
-    this.block = null;
+    if (this.block) {
+      this.block.element.remove();
+      this.block.element.innerHTML = '';
+      this.block = null;
+    }
   }
 
   match(pathname: string) {
@@ -45,6 +49,7 @@ class Route {
       render(this.query, this.block);
       return;
     }
+    render(this.query, this.block);
   }
 }
 

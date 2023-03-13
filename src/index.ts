@@ -6,13 +6,11 @@ import { profileAvatarPageProps, ProfilePage, profilePageProps } from './pages/p
 import { ProfileEditPage, profileEditPageProps } from './pages/profileEdit';
 import { ProfilePassword, profilePasswordProps } from './pages/profilePassword';
 import { StatusPage, statusPage404Props, statusPage500Props } from './pages/status';
-import { pageListProps, PagesList } from './pages/pagesList';
 import Router from './services/Router/Router';
 import { Routes } from './utils/constants';
 import Connect from './services/Store/Connect';
 
 window.addEventListener('DOMContentLoaded', () => {
-  Router.use(Routes.Index, PagesList, pageListProps);
   Router.use(Routes.Main, MainPage);
   Router.use(
     Routes.SignIn,

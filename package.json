@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "npm run build && node server.js --open",
-    "dev": "parcel index.html",
-    "build": "parcel build index.html"
+    "start": "webpack --mode=production --node-env=production && node server.js",
+    "dev": "webpack serve",
+    "build": "webpack --mode=production --node-env=production",
+    "test": "mocha",
+    "precommit": "npm test && npm run lint:all",
+    "lint:es": "eslint .",
+    "lint:style": "npx stylelint \"**/*.scss\"",
+    "lint:all": "npm run lint:es && npm run lint:style"
   },
   "keywords": [],
   "author": "Alexander Efremov",
@@ -21,30 +26,53 @@
   "devDependencies": {
     "@babel/eslint-parser": "7.19.1",
     "@parcel/transformer-sass": "2.8.2",
+    "@types/chai": "4.3.4",
     "@types/express": "4.17.16",
+    "@types/jsdom": "21.1.0",
+    "@types/mocha": "10.0.1",
     "@types/node": "18.11.18",
+    "@types/sinon": "10.0.13",
     "@types/uuid": "9.0.0",
     "@typescript-eslint/eslint-plugin": "5.50.0",
     "@typescript-eslint/parser": "5.50.0",
     "babel-eslint": "10.1.0",
+    "chai": "4.3.7",
+    "css-loader": "6.7.3",
     "eslint": "8.33.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-react": "7.32.2",
     "handlebars": "4.7.7",
+    "handlebars-loader": "1.7.3",
+    "html-webpack-plugin": "5.5.0",
+    "husky": "8.0.3",
+    "jsdom": "21.1.0",
+    "mocha": "10.2.0",
     "parcel": "2.8.2",
     "parcel-transformer-hbs": "1.0.4",
     "prettier": "2.8.3",
-    "stylelint": "14.16.1",
-    "stylelint-scss": "4.3.0",
+    "sass-loader": "13.2.0",
+    "sinon": "15.0.1",
+    "style-loader": "3.3.1",
+    "stylelint": "15.2.0",
+    "stylelint-config-standard-scss": "7.0.1",
+    "stylelint-scss": "4.4.0",
+    "ts-loader": "9.4.2",
+    "ts-node": "10.9.1",
     "typescript": "4.9.4",
-    "uuid": "9.0.0"
+    "uuid": "9.0.0",
+    "webpack": "5.76.1",
+    "webpack-cli": "5.0.1",
+    "webpack-dev-server": "4.11.1"
   },
   "dependencies": {
-    "express": "4.18.2",
-    "normalize-scss": "7.0.1"
+    "express": "4.18.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all test lint:all"
+    }
   }
 }

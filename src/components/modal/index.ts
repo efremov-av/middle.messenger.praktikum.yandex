@@ -1,7 +1,7 @@
 import tpl from './tpl.hbs';
 import './style.scss';
 import Block from '../common/Block';
-import ModalCloseArea from './closeArea';
+import { ModalCloseArea } from './closeArea';
 
 type PropsType = {
   title: string;
@@ -15,7 +15,7 @@ export class Modal extends Block<PropsType> {
   }
 
   protected init(): void {
-    this.children.closeArea = new ModalCloseArea({
+    this.children.closeArea2 = new ModalCloseArea({
       events: {
         click: this.props.onClose,
       },

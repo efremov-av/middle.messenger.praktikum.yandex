@@ -4,11 +4,13 @@
     "target": "es2016",
     "declaration": false,
     "module": "commonjs",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strictNullChecks": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "esModuleInterop": true
   },
   "exclude": ["*.hbs"]
 }

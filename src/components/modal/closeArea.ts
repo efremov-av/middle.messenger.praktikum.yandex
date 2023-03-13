@@ -1,12 +1,11 @@
 import Block from '../common/Block';
 import tplClose from './tplClose.hbs';
-import './style.scss';
 
 type PropsType = {
   events: ComponentEvent;
 };
 
-class ModalCloseArea extends Block<PropsType> {
+export class ModalCloseArea extends Block<PropsType> {
   constructor(props: PropsType) {
     super(props);
   }
@@ -15,5 +14,3 @@ class ModalCloseArea extends Block<PropsType> {
     return this.compile(tplClose, {});
   }
 }
-
-export default ModalCloseArea;

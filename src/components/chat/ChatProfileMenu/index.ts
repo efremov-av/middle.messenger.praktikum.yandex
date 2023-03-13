@@ -36,22 +36,24 @@ export class ChatProfileMenu extends Block<PropsType> {
         },
       },
     });
+  }
 
-    this.children.buttonLogout = new Button({
+  render(): DocumentFragment {
+    this.children.buttonDeleteChat = new Button({
       text: 'Удалить чат',
       type: 'button',
       modificator: 'default',
       events: {
         click: async () => {
           if (this.props.activeChat) {
-            ChatActions.deleteChat(this.props.activeChat.id);
+            if (confirm('Вы действительно хотите удалить чат?')) {
+              ChatActions.deleteChat(this.props.activeChat.id);
+            }
           }
         },
       },
     });
-  }
 
-  render(): DocumentFragment {
     return this.compile(tpl, {});
   }
 }

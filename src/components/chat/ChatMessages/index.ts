@@ -26,6 +26,12 @@ export class ChatMessages extends Block<PropsType> {
           new ChatMessage({ message: m, user: this.props.user, chatUsers: this.props.chatUsers })
       );
 
+    setTimeout(() => {
+      const element = document.getElementById('chatMessages');
+      if (element) {
+        element.scrollTo(0, element.scrollHeight);
+      }
+    }, 0);
     return this.compile(tpl, { ...this.props });
   }
 }
