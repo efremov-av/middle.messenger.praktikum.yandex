@@ -10,7 +10,7 @@
 
 [Netlify](https://efremov-av-practicum-chat.netlify.app/)
 
-[Heroku](https://protected-bastion-88813.herokuapp.com/)
+[Heroku](https://eql-chat.herokuapp.com/)
 
 [Макет figma](https://www.figma.com/file/hUPga5FWUKyTxK3WV7pWNc/Practicum-chat?node-id=0%3A1&t=Lj3WCpTLGFLbooYM-1)
 
