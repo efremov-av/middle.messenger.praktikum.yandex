@@ -61,19 +61,19 @@ export const passwordFields = [
 export const pages = [
   {
     name: 'Login',
-    url: '/signin',
+    url: '/',
   },
   {
     name: 'Sign Up',
-    url: '/signup',
+    url: '/sign-up',
   },
   {
     name: 'Chats',
-    url: '/main',
+    url: '/messages',
   },
   {
     name: 'Profile',
-    url: '/profile',
+    url: '/settings',
   },
   {
     name: '404',
@@ -86,14 +86,13 @@ export const pages = [
 ];
 
 export enum Routes {
-  Index = '/',
-  Main = '/main',
-  SignUp = '/signup',
-  SignIn = '/signin',
-  Profile = '/profile',
-  ProfileEdit = '/profile/edit',
-  ProfilePassword = '/profile/password',
-  ProfileAvatar = '/profile/avatar',
+  Main = '/messages',
+  SignUp = '/sign-up',
+  SignIn = '/',
+  Profile = '/settings',
+  ProfileEdit = '/settings/edit',
+  ProfilePassword = '/settings/password',
+  ProfileAvatar = '/settings/avatar',
   Page500 = '/500',
   Page404 = '/404',
 }

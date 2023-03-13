@@ -31,7 +31,9 @@ class Route {
   ) {}
 
   leave() {
-    this.block = null;
+    if (this.block) {
+      this.block.element.remove();
+    }
   }
 
   match(pathname: string) {
@@ -45,6 +47,7 @@ class Route {
       render(this.query, this.block);
       return;
     }
+    render(this.query, this.block);
   }
 }
 
