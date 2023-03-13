@@ -1,4 +1,4 @@
-@import "./../../variables.scss";
+@import "./../../variables";
 
 .main {
   &__container {
@@ -115,6 +115,7 @@
   border: 1px solid transparent;
   border-radius: 100px;
 }
+
 .gg-chevron-right::after {
   content: "";
   display: block;

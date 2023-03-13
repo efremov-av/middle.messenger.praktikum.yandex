@@ -1,4 +1,4 @@
-@import "./../../variables.scss";
+@import "./../../variables";
 
 .sign-up {
   &__container {
@@ -13,7 +13,7 @@
   &__content {
     width: 480px;
     background: $color-white;
-    box-shadow: 0px 2px 15px $shadow-color;
+    box-shadow: 0 2px 15px $shadow-color;
     border-radius: 12px;
     padding: 30px;
     text-align: center;
@@ -46,8 +46,7 @@
 
   &-form {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-flow: row wrap;
     gap: 0 12px;
 
     > div {
